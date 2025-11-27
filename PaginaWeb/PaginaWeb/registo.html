@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <!-- Configurações e links essenciais da página -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Conta - StayIn</title>
+
+    <!-- Links CSS e Fonts -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Google Fonts para a tipografia do site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/img/android-chrome-512x512.png"
+    />
+  </head>
+
+  <!-- A classe 'auth-page' aplica estilos de fundo e de layout específicos para as páginas de autenticação -->
+  <body class="auth-page">
+    <div class="container-fluid">
+      <div class="row g-0 min-vh-100">
+        <!-- =================================================================
+            COLUNA DO FORMULÁRIO
+            ================================================================== -->
+        <div
+          class="col-lg-6 d-flex align-items-center justify-content-center p-4 order-lg-2"
+        >
+          <div class="auth-form-container">
+            <h2 class="mb-3 fw-bold">Crie a sua conta</h2>
+            <p class="text-muted mb-4">
+              É rápido e fácil. Comece a planear a sua próxima viagem!
+            </p>
+
+            <!-- A classe "needs-validation" e o atributo "novalidate" são para a validação do Bootstrap -->
+            <form id="register-form" class="needs-validation" novalidate>
+              <!-- Linha para Nome e Apelido -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="register-firstname" class="form-label"
+                    >Primeiro Nome</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="register-firstname"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Por favor, insira o seu primeiro nome.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="register-lastname" class="form-label"
+                    >Último Nome</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="register-lastname"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Por favor, insira o seu último nome.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Campo de Email -->
+              <div class="mb-3">
+                <label for="register-email" class="form-label"
+                  >Endereço de Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="register-email"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Por favor, insira um email válido.
+                </div>
+              </div>
+
+              <!-- Campo de Password -->
+              <div class="mb-3">
+                <label for="register-password" class="form-label"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="register-password"
+                  required
+                  minlength="6"
+                />
+                <div class="invalid-feedback">
+                  A sua password deve ter pelo menos 6 caracteres.
+                </div>
+              </div>
+
+              <!-- Checkbox de Termos e Condições -->
+              <div class="form-check mb-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="register-terms"
+                  required
+                />
+                <label class="form-check-label" for="register-terms">
+                  Concordo com os <a href="termos.html">Termos e Condições</a>
+                </label>
+                <div class="invalid-feedback">
+                  Você deve aceitar os termos e condições para continuar.
+                </div>
+              </div>
+
+              <!-- Botão de Submissão -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  Criar Conta
+                </button>
+              </div>
+            </form>
+
+            <p class="text-center mt-3">
+              Já tem uma conta? <a href="login.html">Iniciar Sessão</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- =================================================================
+            COLUNA DOS BENEFÍCIOS (AGORA É A SEGUNDA NO HTML)
+            ================================================================== -->
+        <!-- MUDANÇA 2: Classes alteradas e adicionado "order-lg-1" -->
+        <div
+          class="col-lg-6 d-flex flex-column justify-content-center p-5 auth-reasons-bg order-lg-1"
+        >
+          <a href="index.html" class="navbar-brand fw-bold text-white fs-2 mb-5"
+            >StayIn</a
+          >
+          <h2 class="text-white fw-bold mb-4">
+            Porque deve aderir ao nosso website?
+          </h2>
+
+          <ul class="list-unstyled text-white-50">
+            <li class="d-flex mb-3">
+              <i class="bi bi-check-circle-fill text-success me-3 fs-4"></i>
+              <div>
+                <h6 class="text-white">Reservas Rápidas e Fáceis</h6>
+                <p class="mb-0">
+                  Guarde os seus dados para fazer reservas em segundos.
+                </p>
+              </div>
+            </li>
+            <li class="d-flex mb-3">
+              <i class="bi bi-heart-fill text-danger me-3 fs-4"></i>
+              <div>
+                <h6 class="text-white">Listas de Favoritos</h6>
+                <p class="mb-0">
+                  Guarde os seus alojamentos preferidos para mais tarde.
+                </p>
+              </div>
+            </li>
+            <li class="d-flex mb-3">
+              <i class="bi bi-percent text-warning me-3 fs-4"></i>
+              <div>
+                <h6 class="text-white">Ofertas Exclusivas</h6>
+                <p class="mb-0">
+                  Aceda a descontos e promoções apenas para membros.
+                </p>
+              </div>
+            </li>
+            <li class="d-flex">
+              <i class="bi bi-clock-history text-info me-3 fs-4"></i>
+              <div>
+                <h6 class="text-white">Histórico de Reservas</h6>
+                <p class="mb-0">
+                  Consulte facilmente todas as suas viagens passadas e futuras.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<!-- =================================================================
+    JAVASCRIPT
+    ================================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js" defer></script>
+  </body>
+</html>

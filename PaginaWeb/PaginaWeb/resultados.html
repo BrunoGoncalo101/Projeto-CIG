@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <!-- Configurações e links essenciais da página -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resultados para Lousada - StayIn</title>
+
+    <!-- Links CSS e Fonts -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Google Fonts para a tipografia do site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/img/android-chrome-512x512.png"
+    />
+  </head>
+
+  <body>
+    <!-- =================================================================
+BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
+================================================================== -->
+    <!-- A classe 'navbar-transparent' só deve ser usada na nav do index.html -->
+    <!-- Nas outras páginas, use 'navbar-scrolled' como já faz -->
+    <nav class="navbar navbar-expand-xl navbar-dark fixed-top">
+      <!-- Remova/adicione navbar-transparent ou navbar-scrolled aqui dependendo da página -->
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">StayIn</a>
+        <button
+          class="navbar-toggler custom-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu"
+          aria-controls="menu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <div class="custom-toggler-icon">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <!-- Dropdown para seleção de país/moeda -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span class="flag-icon flag-icon-pt me-2"></span> PT | EUR
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><span class="flag-icon flag-icon-es me-2"></span> ES |
+                    EUR</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><span class="flag-icon flag-icon-gb me-2"></span> GB |
+                    GBP</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <!-- Switcher de Tema (Dark Mode) -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="themeDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-sun-fill" id="theme-icon-active"></i>
+                <span class="d-lg-none ms-2">Tema</span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="themeDropdown"
+              >
+                <li>
+                  <button
+                    class="dropdown-item d-flex align-items-center"
+                    type="button"
+                    data-bs-theme-value="light"
+                  >
+                    <i class="bi bi-sun-fill me-2"></i> Claro
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item d-flex align-items-center"
+                    type="button"
+                    data-bs-theme-value="dark"
+                  >
+                    <i class="bi bi-moon-stars-fill me-2"></i> Escuro
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item d-flex align-items-center"
+                    type="button"
+                    data-bs-theme-value="auto"
+                  >
+                    <i class="bi bi-circle-half me-2"></i> Automático
+                  </button>
+                </li>
+              </ul>
+            </li>
+
+            <!-- ITENS DE MENU QUE MUDAM COM A AUTENTICAÇÃO -->
+
+            <!-- Estado DESLOGADO (será escondido pelo JS) -->
+            <li class="nav-item nav-logged-out">
+              <a class="nav-link" href="registo.html"
+                ><i class="bi bi-person-plus-fill me-1"></i> Registar</a
+              >
+            </li>
+            <li class="nav-item nav-logged-out">
+              <a class="btn btn-success text-white ms-2" href="login.html"
+                ><i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sessão</a
+              >
+            </li>
+
+            <!-- Estado LOGADO (começa escondido com 'd-none', será mostrado pelo JS) -->
+            <li class="nav-item dropdown nav-logged-in d-none">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="userMenuDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-person-circle me-1"></i> Olá, Utilizador
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="userMenuDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="conta.html"
+                    ><i class="bi bi-person-fill me-2"></i>Minha Conta</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item text-danger"
+                    id="logout-button"
+                    href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Sair</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- =================================================================
+    MIGALHAS DE PÃO (BREADCRUMB)
+    ================================================================== -->
+    <!-- Ajuda o utilizador a saber onde está e a navegar de volta facilmente -->
+    <div class="bg-light py-2 border-bottom">
+      <div class="container small">
+        <a href="index.html" class="text-decoration-none text-muted">Início</a>
+        › <strong>Resultados</strong>
+      </div>
+    </div>
+
+    <!-- =================================================================
+    CONTEÚDO PRINCIPAL
+    ================================================================== -->
+    <main class="container my-5">
+      <!-- Botão para abrir os filtros em ecrãs pequenos (mobile) -->
+      <!-- A classe 'd-lg-none' faz com que este botão só apareça em ecrãs MENORES que 'large' -->
+      <div class="d-lg-none mb-3">
+        <button
+          class="btn btn-primary w-100"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasFilters"
+        >
+          <i class="bi bi-funnel-fill me-2"></i> Mostrar Filtros
+        </button>
+      </div>
+
+      <!-- Grelha principal: divide a página em Filtros (esquerda) e Resultados (direita) -->
+      <div class="row">
+        <!-- COLUNA DOS FILTROS (Sidebar) -->
+        <!-- As classes 'd-none d-lg-block' escondem esta sidebar em mobile e mostram em desktop -->
+         
+        <aside class="col-lg-3 d-none d-lg-block">
+          <div class="filters-sidebar p-3 rounded shadow-sm">
+            <h5 class="fw-bold mb-3">Filtros</h5>
+
+            <!-- O componente Acordeão do Bootstrap para organizar os grupos de filtros -->
+            <div class="accordion" id="filtersAccordion">
+              <!-- Filtro: Tipo de Alojamento -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTipo"
+                  >
+                    Tipo de Alojamento
+                  </button>
+                </h2>
+                <div
+                  id="collapseTipo"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#filtersAccordion"
+                >
+                  <div class="accordion-body">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoHotel"
+                      /><label class="form-check-label" for="tipoHotel"
+                        >Hotel</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoHostel"
+                      /><label class="form-check-label" for="tipoHostel"
+                        >Hostel</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoAL"
+                      /><label class="form-check-label" for="tipoAL"
+                        >Alojamento Local</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filtro: Comodidades -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseComodidades"
+                  >
+                    Comodidades
+                  </button>
+                </h2>
+                <div
+                  id="collapseComodidades"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#filtersAccordion"
+                >
+                  <div class="accordion-body">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="comodWi-Fi"
+                      /><label class="form-check-label" for="comodWi-Fi"
+                        >Wi-Fi Gratuito</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="comodEstac"
+                      /><label class="form-check-label" for="comodEstac"
+                        >Estacionamento</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="comodPiscina"
+                      /><label class="form-check-label" for="comodPiscina"
+                        >Piscina</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filtro: Tipo de quarto -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseQuarto"
+                  >
+                    Tipo de Quarto
+                  </button>
+                </h2>
+                <div
+                  id="collapseQuarto"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#filtersAccordion"
+                >
+                  <div class="accordion-body">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoSingle"
+                      /><label class="form-check-label" for="tipoSingle"
+                        >Single</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoTwin"
+                      /><label class="form-check-label" for="tipoTwin"
+                        >Twin</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoCasal"
+                      /><label class="form-check-label" for="tipoCasal"
+                        >Casal</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="tipoSuite"
+                      /><label class="form-check-label" for="tipoSuite"
+                        >Suite</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filtro: Classificação -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseClassificacao"
+                  >
+                    Classificação
+                  </button>
+                </h2>
+                <div
+                  id="collapseClassificacao"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#filtersAccordion"
+                >
+                  <div class="accordion-body">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="5Estrelas"
+                      /><label class="form-check-label" for="5Estrelas"
+                        >5 Estrelas</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="4Estrelas"
+                      /><label class="form-check-label" for="4Estrelas"
+                        >4 Estrelas</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="3Estrelas"
+                      /><label class="form-check-label" for="3Estrelas"
+                        >3 Estrelas</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="2Estrelas"
+                      /><label class="form-check-label" for="2Estrelas"
+                        >2 Estrelas</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100 mt-3">Aplicar</button>
+          </div>
+        </aside>
+
+        <!-- COLUNA DOS RESULTADOS -->
+        <section class="col-lg-9">
+          <!-- Cabeçalho da secção de resultados, com título e dropdown para ordenação -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Resultados em Lousada</h4>
+            <div class="dropdown">
+              <button
+                class="btn btn-light btn-sm dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                Ordenar por: <strong>Populares</strong>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Populares</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Preço (mais baixo)</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Classificação</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card de Resultado 1 -->
+          <!-- Usei uma linha com 'g-0' (sem espaçamento) para juntar a imagem e o conteúdo lado a lado -->
+          <div class="card mb-3 shadow-sm result-card">
+            <div class="row g-0">
+              <div class="col-12 col-md-4">
+                <img
+                  src="img/Resultado1.jpg"
+                  class="img-fluid rounded-start"
+                  alt="Hotel Central"
+                />
+              </div>
+              <div class="col-12 col-md-8">
+                <!-- 'd-flex flex-column' permite alinhar o preço e o botão no fundo do card com 'mt-auto' -->
+                <div class="card-body d-flex flex-column h-100 p-4">
+                  <div>
+                    <h5 class="card-title fw-bold">Hotel Central</h5>
+                    <div class="rating-stars mb-2">
+                      <i class="bi bi-star-fill"></i
+                      ><i class="bi bi-star-fill"></i
+                      ><i class="bi bi-star-fill"></i
+                      ><i class="bi bi-star-fill"></i><i class="bi bi-star"></i
+                      ><span class="ms-2 fw-bold text-success small"
+                        >Excelente</span
+                      ><small class="text-muted">(98 comentários)</small>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      <i class="bi bi-geo-alt-fill me-1"></i>Lousada • 1.3 km do
+                      centro
+                    </p>
+                  </div>
+                  <div class="mt-auto text-end">
+                    <p class="mb-1">
+                      <small class="text-muted"
+                        >Preço por noite a partir de</small
+                      >
+                    </p>
+                    <p class="fw-bold fs-4 text-primary mb-2">€55</p>
+                    <a href="detalhe.html" class="btn btn-primary"
+                      >Ver Detalhes e Preços</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Resultado 2 -->
+          <div class="card mb-3 shadow-sm result-card">
+            <div class="row g-0">
+              <div class="col-md-4 position-relative">
+                <span class="card-badge">Mais Vendido</span>
+                <img
+                  src="img/Resultado2.jpg"
+                  class="img-fluid rounded-start h-100"
+                  alt="Beach Paradise"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body d-flex flex-column h-100 p-4">
+                  <div>
+                    <h5 class="card-title fw-bold">Beach Paradise</h5>
+                    <div class="rating-stars mb-2">
+                      <i class="bi bi-star-fill"></i
+                      ><i class="bi bi-star-fill"></i
+                      ><i class="bi bi-star-fill"></i
+                      ><i class="bi bi-star-fill"></i><i class="bi bi-star"></i
+                      ><span class="ms-2 fw-bold text-success small"
+                        >Excelente</span
+                      ><small class="text-muted">(98 comentários)</small>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      <i class="bi bi-geo-alt-fill me-1"></i>Lousada • 5 km do
+                      centro
+                    </p>
+                  </div>
+                  <div class="mt-auto text-end">
+                    <p class="mb-1">
+                      <small class="text-muted"
+                        >Preço por noite a partir de</small
+                      >
+                    </p>
+                    <p class="fw-bold fs-4 text-primary mb-2">€102</p>
+                    <a href="detalhe.html" class="btn btn-primary"
+                      >Ver Detalhes e Preços</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paginação para navegar entre as várias páginas de resultados -->
+          <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Anterior</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Próximo</a>
+              </li>
+            </ul>
+          </nav>
+        </section>
+      </div>
+    </main>
+
+    <!-- =================================================================
+    MENU OFF-CANVAS PARA OS FILTROS EM MOBILE
+    ================================================================== -->
+     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filtros</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      
+      <div class="offcanvas-body">
+        <!-- ESTA PARTE ESTAVA EM FALTA: O CONTEÚDO DOS FILTROS -->
+        <div class="accordion" id="mobileFiltersAccordion">
+          
+          <!-- Filtro: Tipo de Alojamento -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileTipo">
+                Tipo de Alojamento
+              </button>
+            </h2>
+            <div id="collapseMobileTipo" class="accordion-collapse collapse show" data-bs-parent="#mobileFiltersAccordion">
+              <div class="accordion-body">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoHotelMobile">
+                  <label class="form-check-label" for="tipoHotelMobile">Hotel</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoHostelMobile">
+                  <label class="form-check-label" for="tipoHostelMobile">Hostel</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoALMobile">
+                  <label class="form-check-label" for="tipoALMobile">Alojamento Local</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtro: Comodidades -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileComodidades">
+                Comodidades
+              </button>
+            </h2>
+            <div id="collapseMobileComodidades" class="accordion-collapse collapse" data-bs-parent="#mobileFiltersAccordion">
+              <div class="accordion-body">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="comodWiFiMobile">
+                  <label class="form-check-label" for="comodWiFiMobile">Wi-Fi Gratuito</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="comodEstacMobile">
+                  <label class="form-check-label" for="comodEstacMobile">Estacionamento</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="comodPiscinaMobile">
+                  <label class="form-check-label" for="comodPiscinaMobile">Piscina</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtro: Tipo de Quarto -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileQuarto">
+                Tipo de Quarto
+              </button>
+            </h2>
+            <div id="collapseMobileQuarto" class="accordion-collapse collapse" data-bs-parent="#mobileFiltersAccordion">
+              <div class="accordion-body">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoSingleMobile">
+                  <label class="form-check-label" for="tipoSingleMobile">Single</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoTwinMobile">
+                  <label class="form-check-label" for="tipoTwinMobile">Twin</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoCasalMobile">
+                  <label class="form-check-label" for="tipoCasalMobile">Casal</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="tipoSuiteMobile">
+                  <label class="form-check-label" for="tipoSuiteMobile">Suite</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtro: Classificação -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileClassificacao">
+                Classificação
+              </button>
+            </h2>
+            <div id="collapseMobileClassificacao" class="accordion-collapse collapse" data-bs-parent="#mobileFiltersAccordion">
+              <div class="accordion-body">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="5EstrelasMobile">
+                  <label class="form-check-label" for="5EstrelasMobile">5 Estrelas</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="4EstrelasMobile">
+                  <label class="form-check-label" for="4EstrelasMobile">4 Estrelas</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="3EstrelasMobile">
+                  <label class="form-check-label" for="3EstrelasMobile">3 Estrelas</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="2EstrelasMobile">
+                  <label class="form-check-label" for="2EstrelasMobile">2 Estrelas</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Rodapé do menu com o botão -->
+      <div class="offcanvas-footer p-3 border-top">
+        <button class="btn btn-primary w-100">Aplicar Filtros</button>
+      </div>
+    </div>
+
+    
+
+    <!-- =================================================================
+    FOOTER
+    ================================================================== -->
+    <footer class="py-3">
+      <div class="container text-center text-white">
+        <small>© 2025 StayIn • Termos de utilização • Contactos</small>
+      </div>
+    </footer>
+
+    <!-- =================================================================
+    SCRIPTS JAVASCRIPT
+    ================================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js" defer></script>
+  </body>
+</html>

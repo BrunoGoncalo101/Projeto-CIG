@@ -1,0 +1,633 @@
+/* ==========================================================================
+   ÍNDICE DO PROJETO STAYIN
+   ==========================================================================
+   1. Configurações Globais (Variáveis de Cor, Body, Tipografia)
+   2. Estrutura Principal (Navbar, Footer)
+   3. Componentes Reutilizáveis (Botões, Cards, Estrelas, etc.)
+   4. Layouts de Página Específicos
+   5. Responsividade e Melhorias Mobile
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Configurações Globais (Variáveis de Cor, Body, Tipografia)
+   ========================================================================== */
+
+/* Paleta de cores para o tema claro (Light Mode) */
+:root {
+  --primary-color: #386ffc;
+  --primary-hover-color: #1f17ff;
+  --secondary-color: #e76f51;
+  --secondary-hover-color: #f28462;
+  --background-color: #f8f9fa;
+  --text-color: #212529;
+  --text-muted-color: #6c757d;
+  --card-background-color: #ffffff;
+  --border-color: #dee2e6;
+  --footer-background-color: #2d3436;
+  --auth-sidebar-bg: #2d3436;
+  --star-color: #ffc107;
+  --star-inactive-color: #dee2e6;
+}
+
+/* Paleta de cores para o tema escuro (Dark Mode) */
+[data-bs-theme="dark"] {
+  --primary-color: #405f73;
+  --primary-hover-color: #8bb1ff;
+  --secondary-color: #e98267;
+  --secondary-hover-color: #f39b82;
+  --background-color: #1c1c1e;
+  --card-background-color: #2a2a2c;
+  --footer-background-color: #3f3f40;
+  --auth-sidebar-bg: #303030;
+  --text-color: #f0f0f0;
+  --text-muted-color: #a0a0a0;
+  --star-inactive-color: #404040;
+  --border-color: #404040;
+
+  /* Estilos específicos para componentes em dark mode */
+  .search-form {
+    background-color: rgba(42, 42, 44, 0.95) !important;
+  }
+  .filters-sidebar,
+  .auth-page,
+  footer.bg-light,
+  .bg-light,
+  .dropdown-menu,
+  .offcanvas,
+  .list-group-item {
+    background-color: var(--card-background-color) !important;
+  }
+  .card,
+  .filters-sidebar {
+    border: 1px solid var(--border-color);
+  }
+  .result-card:hover {
+    border-color: var(--primary-color);
+  }
+  body:not(.homepage) .navbar-scrolled {
+    background-color: rgba(28, 28, 30, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .accordion-button {
+    background-color: var(--background-color);
+  }
+  .stepper::before {
+    background-color: var(--border-color);
+  }
+  .step-icon {
+    background-color: var(--border-color);
+  }
+  .divider::before,
+  .divider::after {
+    background-color: var(--border-color);
+  }
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Adicionar padding no topo para compensar a navbar fixa em todas as páginas */
+body {
+  padding-top: 55px;
+}
+
+main.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+small,
+.text-muted {
+  color: var(--text-muted-color) !important;
+}
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* ==========================================================================
+   2. Estrutura Principal (Navbar, Footer)
+   ========================================================================== */
+.navbar {
+  transition: background-color 0.4s ease-in-out;
+}
+.navbar-transparent {
+  background-color: transparent !important;
+}
+
+.navbar-scrolled,
+body:not(.homepage) .navbar {
+  position: fixed; /* Garante que a navbar fica fixa */
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030; /* Valor padrão do Bootstrap para navbars fixas */
+  background-color: var(--primary-color) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar .nav-link {
+  font-weight: 500;
+}
+.flag-icon {
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+}
+footer {
+  background-color: var(--footer-background-color);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 2rem 0;
+  margin-top: -1px;
+}
+
+/* ==========================================================================
+   3. Componentes Reutilizáveis (Botões, Cards, Estrelas, etc.)
+   ========================================================================== */
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover-color);
+}
+.btn-success {
+  background-color: var(--secondary-color);
+  border: none;
+}
+.btn-success:hover {
+  background-color: var(--secondary-hover-color);
+}
+.rating-stars {
+  color: var(--star-color);
+}
+.rating-stars .bi-star {
+  color: var(--star-inactive-color);
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary-color);
+}
+
+/* ==========================================================================
+   4. Layouts de Página Específicos
+   ========================================================================== */
+/* --- Homepage --- */
+.hero-section {
+  position: relative;
+  height: 60vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../img/hero-background.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.search-form {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+}
+.offer-card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.offer-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+.offer-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+/* --- Página de Resultados --- */
+.filters-sidebar {
+  background-color: var(--card-background-color);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.filters-sidebar .accordion-button:not(.collapsed) {
+  color: #fff;
+  background-color: var(--primary-color);
+}
+.filters-sidebar .accordion-button:focus {
+  box-shadow: none;
+}
+.filters-sidebar .accordion-item {
+  border: none;
+}
+.result-card {
+  height: 240px;
+  transition: all 0.2s;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1) !important;
+}
+.result-card .img-fluid {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.result-card:hover .img-fluid {
+  transform: scale(1.05);
+}
+.result-card .row,
+.result-card .col-md-4 {
+  height: 100%;
+}
+.result-card .card-badge {
+  position: absolute;
+  top: 15px;
+  left: -8px;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 5px 15px 5px 20px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
+}
+
+/* --- Página de Detalhes --- */
+.page-title-details {
+  font-size: 2.5rem;
+}
+.section-header {
+  border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 3rem;
+}
+.gallery-carousel {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+.gallery-carousel .carousel-item img {
+  height: 450px;
+  object-fit: cover;
+}
+.room-list-item {
+  transition: all 0.2s;
+}
+.room-list-item:hover {
+  background-color: var(--background-color);
+  transform: scale(1.02);
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Página de Reserva (Stepper) --- */
+.stepper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  width: 100%;
+  z-index: -1;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--background-color);
+  padding: 0 1rem;
+}
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.step.active .step-icon {
+  background-color: var(--primary-color);
+}
+.step.active .step-label {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* --- Páginas de Autenticação --- */
+.auth-reasons-bg {
+  background-color: var(--auth-sidebar-bg);
+  color: white;
+}
+.auth-form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 1rem;
+}
+.divider {
+  text-align: center;
+  position: relative;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+}
+.divider::before {
+  left: 0;
+}
+.divider::after {
+  right: 0;
+}
+
+/* --- Página da Conta Pessoal --- */
+.reservation-card .img-fluid {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+}
+@media (min-width: 768px) {
+  .reservation-card {
+    height: 180px;
+  }
+  .reservation-card .row,
+  .reservation-card .col-md-4,
+  .reservation-card .col-md-8 {
+    height: 100%;
+  }
+  .reservation-card .img-fluid {
+    height: 100%;
+  }
+}
+
+/* ==========================================================================
+   5. Responsividade e Melhorias Mobile
+   ========================================================================== */
+.custom-toggler.navbar-toggler {
+  border: none;
+}
+.custom-toggler.navbar-toggler:focus {
+  box-shadow: none;
+}
+.custom-toggler-icon {
+  position: relative;
+  width: 30px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.custom-toggler-icon span {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 3px;
+  display: block;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.custom-toggler[aria-expanded="true"] .custom-toggler-icon span:nth-of-type(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+.custom-toggler[aria-expanded="true"] .custom-toggler-icon span:nth-of-type(2) {
+  opacity: 0;
+}
+.custom-toggler[aria-expanded="true"] .custom-toggler-icon span:nth-of-type(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.offcanvas {
+  display: flex;
+  flex-direction: column;
+}
+.offcanvas-body {
+  overflow-y: auto;
+}
+.offcanvas-footer .btn {
+  font-size: 1.1rem;
+}
+.offcanvas .accordion-button {
+  font-weight: 500;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.offcanvas .accordion-button:not(.collapsed) {
+  background-color: var(--primary-color);
+  color: white;
+}
+.offcanvas .accordion-button:focus {
+  box-shadow: none;
+}
+.offcanvas .accordion-body {
+  padding: 1rem 1.25rem;
+}
+.offcanvas .form-check {
+  margin-bottom: 0.5rem;
+}
+.offcanvas .form-check-input {
+  display: none;
+}
+.offcanvas .form-check-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.offcanvas .form-check-label:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.offcanvas .form-check-input:checked + .form-check-label {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  font-weight: 500;
+}
+
+@media (max-width: 1199.98px) {
+  .navbar .navbar-collapse.show,
+  .navbar .navbar-collapse.collapsing {
+    background-color: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .navbar .navbar-nav {
+    text-align: center;
+  }
+  .navbar .nav-item {
+    margin: 0.5rem 0;
+  }
+  .navbar .btn-success {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+  }
+  .navbar .dropdown-menu {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+  }
+  .navbar .dropdown-item {
+    color: rgba(255, 255, 255, 0.7);
+    justify-content: center;
+  }
+  .navbar .dropdown-item:hover {
+    color: #fff;
+    background-color: transparent;
+  }
+}
+@media (max-width: 767.98px) {
+  #ofertasCarousel .carousel-control-prev,
+  #ofertasCarousel .carousel-control-next {
+    display: none;
+  }
+  #ofertasCarousel .carousel-indicators {
+    position: static;
+    margin-top: 1rem;
+  }
+  #ofertasCarousel .carousel-indicators button {
+    background-color: var(--primary-color);
+  }
+  .offer-card .card-body .btn-outline-primary {
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 1rem !important;
+  }
+  .offer-card .card-body div.d-flex {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  .offer-card .card-body span.fw-bold.fs-5 {
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  .result-card {
+    height: auto; /* Remove a altura fixa */
+  }
+  .result-card .img-fluid {
+    height: 180px; /* Dá uma altura fixa à imagem para ficar bem no telemóvel */
+  }
+}
+@media (min-width: 768px) {
+  #ofertasCarousel .indicators {
+    display: none;
+  }
+  #ofertasCarousel .carousel-control-prev {
+    transform: translateX(-80%);
+  }
+  #ofertasCarousel .carousel-control-next {
+    transform: translateX(80%);
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   6. CORREÇÕES FINAIS (Carrossel Híbrido: PC vs Mobile)
+   ========================================================================== */
+
+/* ============================================================
+         1. REGRAS GERAIS (LIMPEZA E BOTÕES)
+         ============================================================ */
+
+/* Limpeza de linhas e bordas */
+.carousel-inner,
+.carousel-item,
+.row,
+.col-lg-3,
+.card-body,
+.d-flex {
+  text-decoration: none !important;
+  border: none !important;
+}
+.section-title::after {
+  display: none !important;
+  content: none !important;
+}
+.card,
+.offer-card {
+  border: none !important;
+}
+.offer-card a {
+  text-decoration: none !important;
+}
+.carousel-indicators {
+  display: none !important;
+}
+
+/* Botão "Ver detalhes" com caixa azul */
+.offer-card .btn {
+  border: 1px solid #0d6efd !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  margin-top: auto !important;
+}
+.offer-card .btn:hover {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+/* ============================================================
+         2. REGRAS PARA COMPUTADOR (Ecrã Grande)
+         Carrossel ATIVO com setas "dentro" da imagem
+         ============================================================ */
+@media (min-width: 992px) {
+  /* Bolas pretas */
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    padding: 1.2rem;
+    background-size: 50%;
+  }
+
+  #ofertasCarousel .carousel-control-prev {
+    left: 10px !important;
+  }
+  #ofertasCarousel .carousel-control-next {
+    right: 10px !important;
+  }
+}
+
+/* ============================================================
+         3. REGRAS PARA TABLET E TELEMÓVEL (Ecrã Pequeno)
+         Carrossel DESATIVADO -> Lista Vertical (Scroll)
+         ============================================================ */
+@media (max-width: 991.98px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none !important;
+  }
+  .carousel-item {
+    display: block !important;
+    margin-right: 0 !important;
+    float: none !important;
+    opacity: 1 !important;
+    margin-bottom: 1.5rem;
+  }
+  .carousel-inner {
+    overflow: visible !important;
+  }
+}
