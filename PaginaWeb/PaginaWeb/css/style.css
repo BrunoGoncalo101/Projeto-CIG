@@ -133,7 +133,7 @@
  .btn-outline-primary {
   color: #ffffff; /* Altera a cor do texto para um azul mais vibrante */
   border-color: #405f73; /* Altera a cor da borda */
-  background-color: #405f73;
+  
 }
 
 .btn-outline-primary:hover {
@@ -175,6 +175,7 @@ small,
 .navbar-transparent {
   background-color: transparent !important;
 }
+
 
 .navbar-scrolled,
 body:not(.homepage) .navbar {
