@@ -198,149 +198,193 @@ if (registerForm) {
   }
 
 // =========================================================================
-// 6. LÓGICA DO STEPPER E FORMULÁRIO DE RESERVA
-// =========================================================================
-const bookingForm = document.getElementById("booking-form");
-if (bookingForm) {
-  const stepperItems = document.querySelectorAll(".stepper .step");
-  const formSteps = document.querySelectorAll(".form-step");
-  const nextButtons = document.querySelectorAll(".next-step-btn");
-  const prevButtons = document.querySelectorAll(".prev-step-btn");
-  let currentStep = 0;
+  // 6. LÓGICA DO STEPPER E FORMULÁRIO DE RESERVA
+  // =========================================================================
+  const bookingForm = document.getElementById("booking-form");
+  if (bookingForm) {
+    const stepperItems = document.querySelectorAll(".stepper .step");
+    const formSteps = document.querySelectorAll(".form-step");
+    const nextButtons = document.querySelectorAll(".next-step-btn");
+    const prevButtons = document.querySelectorAll(".prev-step-btn");
+    let currentStep = 0;
 
-  // --- LÓGICA PARA MOSTRAR CAMPOS DE PAGAMENTO ---
-  const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
-  const creditCardDetails = document.getElementById('credit-card-details');
-  const mbwayDetails = document.getElementById('mbway-details');
-  const ccFields = creditCardDetails.querySelectorAll('input');
+    // --- LÓGICA PARA MOSTRAR CAMPOS DE PAGAMENTO ---
+    const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+    const creditCardDetails = document.getElementById('credit-card-details');
+    const mbwayDetails = document.getElementById('mbway-details');
+    const ccFields = creditCardDetails.querySelectorAll('input');
 
-  paymentMethodRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      // Esconde todas as secções de detalhes
-      creditCardDetails.classList.add('d-none');
-      mbwayDetails.classList.add('d-none');
-      // Remove 'required' de todos os campos de cartão e mbway
-      ccFields.forEach(field => field.required = false);
-      if (document.getElementById('mbway-phone')) {
-        document.getElementById('mbway-phone').required = false;
-      }
+    paymentMethodRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        // Esconde todas as secções de detalhes
+        creditCardDetails.classList.add('d-none');
+        mbwayDetails.classList.add('d-none');
+        // Remove 'required' de todos os campos de cartão e mbway
+        ccFields.forEach(field => field.required = false);
+        if (document.getElementById('mbway-phone')) {
+          document.getElementById('mbway-phone').required = false;
+        }
 
-      if (radio.id === 'payment-cc' && radio.checked) {
-        creditCardDetails.classList.remove('d-none');
-        // Adiciona 'required' aos campos de cartão
-        ccFields.forEach(field => field.required = true);
-      } else if (radio.id === 'payment-mbway' && radio.checked) {
-        mbwayDetails.classList.remove('d-none');
-        document.getElementById('mbway-phone').required = true;
-      }
+        if (radio.id === 'payment-cc' && radio.checked) {
+          creditCardDetails.classList.remove('d-none');
+          // Adiciona 'required' aos campos de cartão
+          ccFields.forEach(field => field.required = true);
+        } else if (radio.id === 'payment-mbway' && radio.checked) {
+          mbwayDetails.classList.remove('d-none');
+          document.getElementById('mbway-phone').required = true;
+        }
+      });
     });
-  });
-  // ---------------------------------------------------
 
-  const showStep = (stepIndex) => {
-    formSteps.forEach(step => (step.style.display = "none"));
-    if(formSteps[stepIndex]) formSteps[stepIndex].style.display = "block";
-    
-    stepperItems.forEach((step, index) => {
+    const showStep = (stepIndex) => {
+      formSteps.forEach(step => (step.style.display = "none"));
+      if (formSteps[stepIndex]) formSteps[stepIndex].style.display = "block";
+      
+      stepperItems.forEach((step, index) => {
         step.classList.toggle("active", index < stepIndex + 1);
-    });
-    currentStep = stepIndex;
-  };
-  
-  const validateCurrentStep = () => {
-    let isValid = true;
-    const currentStepFields = formSteps[currentStep].querySelectorAll("input[required]");
-    currentStepFields.forEach(field => {
-      if (!field.checkValidity()) {
-        isValid = false;
-      }
-    });
-    return isValid;
-  };
-
-  const populateConfirmationStep = () => {
-    document.getElementById("confirm-nome").innerText = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`;
-    document.getElementById("confirm-email").innerText = document.getElementById("email").value;
-    // Atualiza para mostrar o método de pagamento selecionado
-    const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
-    document.getElementById("confirm-pagamento").innerText = selectedPayment ? selectedPayment.value : "Não selecionado";
-  };
-
-  nextButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      if (validateCurrentStep()) {
-        if (currentStep === 1) { // Ao sair do passo de pagamento
-          populateConfirmationStep();
-        }
-        if (currentStep < formSteps.length - 1) {
-          showStep(currentStep + 1);
-        }
-      } else {
-        bookingForm.classList.add("was-validated");
-      }
-    });
-  });
-
-  prevButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      if (currentStep > 0) {
-        showStep(currentStep - 1);
-      }
-    });
-  });
-
-  
-  bookingForm.addEventListener("submit", (event) => {
-    event.preventDefault(); // Impede o envio padrão do formulário
-    
-    // 1. Guardar os detalhes da reserva no localStorage
-    const reservaDetalhes = {
-      alojamento: "Hotel Central", // Exemplo, pode ser dinâmico
-      checkin: document.getElementById("resumo-checkin").innerText,
-      checkout: document.getElementById("resumo-checkout").innerText,
-      hospedes: document.getElementById("resumo-hospedes").innerText,
-      preco: document.getElementById("resumo-preco").innerText,
+      });
+      currentStep = stepIndex;
     };
-    localStorage.setItem("reservaDetalhes", JSON.stringify(reservaDetalhes));
+    
+    const validateCurrentStep = () => {
+      let isValid = true;
+      const currentStepFields = formSteps[currentStep].querySelectorAll("input[required]");
+      currentStepFields.forEach(field => {
+        if (!field.checkValidity()) {
+          isValid = false;
+        }
+      });
+      return isValid;
+    };
 
-    // 2. Mostrar o spinner de carregamento no botão
-    const finalButton = document.querySelector('#booking-form button[type="submit"]');
-    if (finalButton) {
+    const populateConfirmationStep = () => {
+      document.getElementById("confirm-nome").innerText = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`;
+      document.getElementById("confirm-email").innerText = document.getElementById("email").value;
+      // Atualiza para mostrar o método de pagamento selecionado
+      const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+      document.getElementById("confirm-pagamento").innerText = selectedPayment ? selectedPayment.value : "Não selecionado";
+    };
+
+    nextButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        if (validateCurrentStep()) {
+          if (currentStep === 1) { // Ao sair do passo de pagamento
+            populateConfirmationStep();
+          }
+          if (currentStep < formSteps.length - 1) {
+            showStep(currentStep + 1);
+          }
+        } else {
+          bookingForm.classList.add("was-validated");
+        }
+      });
+    });
+
+    prevButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        if (currentStep > 0) {
+          showStep(currentStep - 1);
+        }
+      });
+    });
+
+    bookingForm.addEventListener("submit", (event) => {
+      event.preventDefault(); // Impede o envio padrão do formulário
+      
+      // 1. Guardar os detalhes da reserva no localStorage
+      const reservaDetalhes = {
+        alojamento: "Hotel Central", // Exemplo, pode ser dinâmico
+        checkin: document.getElementById("resumo-checkin").innerText,
+        checkout: document.getElementById("resumo-checkout").innerText,
+        hospedes: document.getElementById("resumo-hospedes").innerText,
+        preco: document.getElementById("resumo-preco").innerText,
+      };
+      localStorage.setItem("reservaDetalhes", JSON.stringify(reservaDetalhes));
+
+      // 2. Mostrar o spinner de carregamento no botão
+      const finalButton = document.querySelector('#booking-form button[type="submit"]');
+      if (finalButton) {
         finalButton.disabled = true;
         finalButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> A Processar...`;
+      }
+
+      // 3. Simular o processamento e redirecionar para a página de confirmação
+      setTimeout(() => {
+        window.location.href = "confirmacao.html";
+      }, 1500); // Espera 1.5 segundos (como nos sites de reserva normais)
+    });
+
+    if (formSteps.length > 0) {
+      showStep(0);
     }
 
-    // 3. Simular o processamento e redirecionar para a página de confirmação
-    setTimeout(() => {
-      window.location.href = "confirmacao.html";
-    }, 1500); // Espera 1.5 segundos (como nos sites de reserva normais)
-  });
+    // =========================================================================
+    // 6.1. Interceptar a tecla Enter (para evitar submissão antes da hora)
+    // =========================================================================
 
-  if (formSteps.length > 0) {
-    showStep(0);
+    bookingForm.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Sempre prevenir o comportamento padrão do Enter
+
+        // Vamos verificar em qual passo estamos
+        if (currentStep === 0) {
+          // Se estivermos no Passo 1 (Dados Pessoais), Enter avança para o próximo passo
+          if (validateCurrentStep()) {
+            showStep(1); // Avança para o passo 2
+          } else {
+            // Forçar validação visual se falta algum campo
+            bookingForm.classList.add("was-validated");
+          }
+        } else if (currentStep === 1) {
+          // Se estivermos no Passo 2 (Pagamento), Enter avança para a confirmação
+          if (validateCurrentStep()) {
+            populateConfirmationStep(); // Preenche o resumo da confirmação
+            showStep(2); // Avança para o passo 3 (Confirmação)
+          } else {
+            // Forçar validação visual se falta algum campo
+            bookingForm.classList.add("was-validated");
+          }
+        } else if (currentStep === 2) {
+          
+        }
+      }
+    });
   }
-}
 
   // =========================================================================
-// 7. LÓGICA DA PÁGINA DE CONFIRMAÇÃO
-// =========================================================================
-const confirmationPage = document.querySelector(".confirmation-summary");
-if (confirmationPage) {
-  // 1. Procura os detalhes da reserva que foram guardados no localStorage
-  const detalhes = JSON.parse(localStorage.getItem("reservaDetalhes"));
+  // 7. LÓGICA DA PÁGINA DE CONFIRMAÇÃO
+  // =========================================================================
+  const confirmationPage = document.querySelector(".confirmation-summary");
+  if (confirmationPage) {
+    // 1. Procura os detalhes da reserva que foram guardados no localStorage
+    const detalhes = JSON.parse(localStorage.getItem("reservaDetalhes"));
 
-  // 2. Verifica se os detalhes existem (para evitar erros)
-  if (detalhes) {
-    // 3. Preenche os elementos na página com a informação da reserva
-    document.getElementById("conf-alojamento").innerText = detalhes.alojamento;
-    document.getElementById("conf-checkin").innerText = detalhes.checkin;
-    document.getElementById("conf-checkout").innerText = detalhes.checkout;
-    document.getElementById("conf-hospedes").innerText = detalhes.hospedes;
-    document.getElementById("conf-preco").innerText = detalhes.preco;
+    // 2. Verifica se os detalhes existem (para evitar erros)
+    if (detalhes) {
+      // 3. Preenche os elementos na página com a informação da reserva
+      document.getElementById("conf-alojamento").innerText = detalhes.alojamento;
+      document.getElementById("conf-checkin").innerText = detalhes.checkin;
+      document.getElementById("conf-checkout").innerText = detalhes.checkout;
+      document.getElementById("conf-hospedes").innerText = detalhes.hospedes;
+      document.getElementById("conf-preco").innerText = detalhes.preco;
 
-    // 4. Limpa os detalhes do localStorage depois de os mostrar
-    // Isto impede que a mesma informação seja mostrada numa visita futura à página.
-    localStorage.removeItem("reservaDetalhes");
+      // 4. Limpa os detalhes do localStorage depois de os mostrar
+      // Isto impede que a mesma informação seja mostrada numa visita futura à página.
+      localStorage.removeItem("reservaDetalhes");
+    }
   }
-}
+
+// =========================================================================
+  // 8. BLOQUEIO DE ACESSO À PÁGINA DE RESERVA PARA NÃO AUTENTICADOS
+  // =========================================================================
+  // Verifica se estamos na página de reserva
+  if (window.location.pathname.includes("reserva.html")) {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (!isLoggedIn) {
+      // Se não estiver autenticado, redireciona para a página de login
+      window.location.href = "login.html";
+    }
+  }
+
+
 });
