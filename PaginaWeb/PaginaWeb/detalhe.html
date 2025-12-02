@@ -4,7 +4,7 @@
     <!-- Configurações e links essenciais da página -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hotel Central - Detalhes - StayIn</title>
+    <title>Magnificent Hotel - Detalhes - StayIn</title>
 
     <!-- Links CSS e Fonts -->
     <link
@@ -28,11 +28,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="/img/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" href="img/android-chrome-512x512.png" />
   </head>
 
   <body>
@@ -133,7 +129,7 @@
                 </li>
               </ul>
             </li>
-            <!-- ITENS DE MENU QUE MUDAM COM A AUTENTICAÇÃO -->
+            <!-- Sem login -->
             <li class="nav-item nav-logged-out">
               <a class="nav-link" href="registo.html"
                 ><i class="bi bi-person-plus-fill me-1"></i> Registar</a
@@ -144,6 +140,7 @@
                 ><i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sessão</a
               >
             </li>
+            <!-- Com login -->
             <li class="nav-item dropdown nav-logged-in d-none">
               <a
                 class="nav-link dropdown-toggle"
@@ -181,7 +178,7 @@
     </nav>
 
     <!-- =================================================================
-    MIGALHAS DE PÃO (BREADCRUMB)
+    BREADCRUMB
     ================================================================== -->
     <!-- Isto ajuda o utilizador a saber onde está e a navegar para trás. -->
     <div class="bg-light py-2 border-bottom">
@@ -192,7 +189,7 @@
           >Resultados</a
         >
         ›
-        <strong>Hotel Central</strong>
+        <strong>Magnificent Hotel</strong>
       </div>
     </div>
 
@@ -200,12 +197,9 @@
     CONTEÚDO PRINCIPAL
     ================================================================== -->
     <main class="container my-5">
-      <!-- Cabeçalho da página com as informações principais do hotel -->
       <div class="mb-4">
-        <!-- NOME DO ALOJAMENTO -->
-        <h1 class="fw-bold page-title-details mb-1">Hotel Central</h1>
+        <h1 class="fw-bold page-title-details mb-1">Magnificent Hotel</h1>
 
-        <!-- TIPO DE ALOJAMENTO (NOVO) -->
         <span class="badge bg-info-subtle text-info-emphasis mb-2">Hotel</span>
 
         <div class="d-flex align-items-center flex-wrap">
@@ -218,17 +212,15 @@
           <small class="text-muted">(98 comentários)</small>
         </div>
 
-        <!-- LOCALIZAÇÃO -->
         <p class="small text-muted mt-1">
           <i class="bi bi-geo-alt-fill me-1"></i>Lousada • 1.3 km do centro
         </p>
       </div>
 
-      <!-- Grelha principal: divide a página em Conteúdo (esquerda) e Sidebar de Reserva (direita) -->
       <div class="row gx-lg-5">
-        <!-- COLUNA PRINCIPAL (ESQUERDA) -->
+        <!-- COLUNA PRINCIPAL -->
         <div class="col-lg-8">
-          <!-- FOTOS (GALERIA) -->
+          <!-- FOTOS -->
           <div
             id="hotelGallery"
             class="carousel slide mb-4 gallery-carousel"
@@ -285,13 +277,13 @@
           <!-- DESCRIÇÃO DO ALOJAMENTO -->
           <h4 class="fw-bold section-header">Sobre o Alojamento</h4>
           <p>
-            Localizado no coração da cidade, o Hotel Central oferece uma
+            Localizado no coração da cidade, o Magnificent Hotel oferece uma
             experiência de conforto e conveniência. Com quartos modernos, um spa
             relaxante e um restaurante de renome, é a escolha perfeita para a
             sua estadia de lazer ou negócios.
           </p>
 
-          <!-- VANTAGENS PRINCIPAIS (NOVO) -->
+          <!-- VANTAGENS PRINCIPAIS -->
           <div class="row my-4">
             <div class="col-md-6 mb-3">
               <div class="d-flex align-items-center">
@@ -340,7 +332,7 @@
             </div>
           </div>
 
-          <!-- INFORMAÇÕES IMPORTANTES (POLÍTICAS) -->
+          <!-- INFORMAÇÕES IMPORTANTES -->
           <h4 class="fw-bold section-header">Informações e Políticas</h4>
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -379,7 +371,7 @@
             </div>
           </div>
 
-          <!-- LISTAGEM DE QUARTOS DISPONÍVEIS -->
+          <!-- LISTA DE QUARTOS DISPONÍVEIS -->
           <h4 class="fw-bold section-header">Selecione o seu Quarto</h4>
           <div class="list-group">
             <!-- Quarto Disponível 1 -->
@@ -439,7 +431,7 @@
             </div>
           </div>
 
-          <!-- Avaliações de Hóspedes (sem alterações) -->
+          <!-- Avaliações de Hóspedes -->
           <h4 class="fw-bold section-header">O que dizem os nossos hóspedes</h4>
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -515,9 +507,9 @@
           </div>
         </aside>
       </div>
-      <!-- Fim da row principal -->
+      
     </main>
-    <!-- Fim do container principal -->
+    
 
     <!-- =================================================================
     FOOTER

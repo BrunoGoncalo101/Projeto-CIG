@@ -26,11 +26,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="/img/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" href="img/android-chrome-512x512.png" />
   </head>
   <body>
     <!-- =================================================================
@@ -56,7 +52,6 @@ NAVBAR
         </button>
         <div class="collapse navbar-collapse" id="menu">
           <ul class="navbar-nav ms-auto align-items-center">
-            <!-- Dropdown para seleção de país/moeda -->
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -87,7 +82,6 @@ NAVBAR
               </ul>
             </li>
 
-            <!-- Switcher de Tema (Dark Mode) -->
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -134,21 +128,7 @@ NAVBAR
               </ul>
             </li>
 
-            <!-- ITENS DE MENU QUE MUDAM COM A AUTENTICAÇÃO -->
-
-            <!-- Estado DESLOGADO (será escondido pelo JS se estiver logado) -->
-            <li class="nav-item nav-logged-out">
-              <a class="nav-link" href="registo.html"
-                ><i class="bi bi-person-plus-fill me-1"></i> Registar</a
-              >
-            </li>
-            <li class="nav-item nav-logged-out">
-              <a class="btn btn-success text-white ms-2" href="login.html"
-                ><i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sessão</a
-              >
-            </li>
-
-            <!-- Estado LOGADO (começa escondido com 'd-none', será mostrado pelo JS se estiver logado) -->
+            <!-- Com login -->
             <li class="nav-item dropdown nav-logged-in d-none">
               <a
                 class="nav-link dropdown-toggle"
@@ -236,7 +216,6 @@ NAVBAR
           <div class="tab-content" id="v-pills-tabContent">
             <!-- ========================================================== -->
             <!-- PAINEL DE CONTEÚDO 1: MINHAS RESERVAS                     -->
-            <!-- A class 'show active' torna-o visível por defeito       -->
             <!-- ========================================================== -->
             <div
               class="tab-pane fade show active"
@@ -253,18 +232,20 @@ NAVBAR
                     <img
                       src="img/Alojamento em destaque 1.jpg"
                       class="img-fluid rounded-start"
-                      alt="Hotel Central"
+                      alt="Magnificent Hotel"
                     />
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <h5 class="card-title">Hotel Central</h5>
+                      <h5 class="card-title">Magnificent Hotel</h5>
                       <p class="card-text text-muted">
                         <i class="bi bi-calendar-check me-1"></i> 10/02/2025 a
                         12/02/2025
                       </p>
                       <span class="badge bg-success">Confirmado</span>
-                      <a href="detalhe.html" class="btn btn-outline-primary float-end"
+                      <a
+                        href="detalhe.html"
+                        class="btn btn-outline-primary float-end"
                         >Ver Detalhes</a
                       >
                     </div>
@@ -301,7 +282,6 @@ NAVBAR
 
             <!-- ========================================================== -->
             <!-- PAINEL DE CONTEÚDO 2: MEU PERFIL                         -->
-            <!-- Este painel está escondido por defeito                 -->
             <!-- ========================================================== -->
             <div
               class="tab-pane fade"
@@ -313,7 +293,7 @@ NAVBAR
 
               <!-- Formulário do Perfil -->
               <form id="profile-form">
-                <!-- Card: Dados Pessoais -->
+                <!-- Dados Pessoais -->
                 <div class="card mb-4">
                   <div class="card-body">
                     <h5 class="card-title">Dados Pessoais</h5>
@@ -356,7 +336,7 @@ NAVBAR
                   </div>
                 </div>
 
-                <!-- Card: Alterar Password -->
+                <!-- Alterar Password -->
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Alterar Password</h5>
@@ -393,7 +373,6 @@ NAVBAR
                   </div>
                 </div>
 
-                <!-- Botão de Guardar -->
                 <div class="mt-4 text-end">
                   <button type="submit" class="btn btn-primary">
                     Guardar Alterações
@@ -406,7 +385,7 @@ NAVBAR
       </div>
     </main>
 
-<!-- =================================================================
+    <!-- =================================================================
     FOOTER
     ================================================================== -->
     <footer class="py-3 mt-5 bg-dark">

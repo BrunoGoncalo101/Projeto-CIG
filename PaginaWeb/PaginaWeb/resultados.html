@@ -29,11 +29,7 @@
       rel="stylesheet"
     />
 
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="/img/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" href="img/android-chrome-512x512.png" />
   </head>
 
   <body>
@@ -45,7 +41,9 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
     <nav class="navbar navbar-expand-xl navbar-dark fixed-top">
       <!-- Remova/adicione navbar-transparent ou navbar-scrolled aqui dependendo da página -->
       <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">Stay<span class="logoColor">In</span></a>
+        <a class="navbar-brand fw-bold" href="index.html"
+          >Stay<span class="logoColor">In</span></a
+        >
         <button
           class="navbar-toggler custom-toggler"
           type="button"
@@ -139,9 +137,7 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
               </ul>
             </li>
 
-            <!-- ITENS DE MENU QUE MUDAM COM A AUTENTICAÇÃO -->
-
-            <!-- Estado DESLOGADO (será escondido pelo JS) -->
+            <!-- Sem login (escondido pelo JS) -->
             <li class="nav-item nav-logged-out">
               <a class="nav-link" href="registo.html"
                 ><i class="bi bi-person-plus-fill me-1"></i> Registar</a
@@ -153,7 +149,7 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
               >
             </li>
 
-            <!-- Estado LOGADO (começa escondido com 'd-none', será mostrado pelo JS) -->
+            <!-- Com login -->
             <li class="nav-item dropdown nav-logged-in d-none">
               <a
                 class="nav-link dropdown-toggle"
@@ -191,22 +187,21 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
     </nav>
 
     <!-- =================================================================
-    MIGALHAS DE PÃO (BREADCRUMB)
+    BREADCRUMB
     ================================================================== -->
     <!-- Ajuda o utilizador a saber onde está e a navegar de volta facilmente -->
-    <div class="bg-light py-2 border-bottom">
-      <div class="container small">
-        <a href="index.html" class="text-decoration-none text-muted">Início</a>
-        › <strong>Resultados</strong>
-      </div>
+    <div class="container small py-2">
+      <a href="index.html" class="text-muted text-decoration-none">Início</a>
+      <span class="breadcrumb-separator"> >> </span>
+      <strong class="text-dark">Resultados da pesquisa</strong>
     </div>
 
     <!-- =================================================================
     CONTEÚDO PRINCIPAL
     ================================================================== -->
     <main class="container my-5">
-      <!-- Botão para abrir os filtros em ecrãs pequenos (mobile) -->
-      <!-- A classe 'd-lg-none' faz com que este botão só apareça em ecrãs MENORES que 'large' -->
+      <!-- Botão para abrir os filtros em ecrãs pequenos -->
+      <!-- A classe 'd-lg-none' faz com que este botão só apareça em ecrãs pequenos -->
       <div class="d-lg-none mb-3">
         <button
           class="btn btn-primary w-100"
@@ -220,9 +215,9 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
 
       <!-- Grelha principal: divide a página em Filtros (esquerda) e Resultados (direita) -->
       <div class="row">
-        <!-- COLUNA DOS FILTROS (Sidebar) -->
+        <!-- COLUNA DOS FILTROS -->
         <!-- As classes 'd-none d-lg-block' escondem esta sidebar em mobile e mostram em desktop -->
-         
+
         <aside class="col-lg-3 d-none d-lg-block">
           <div class="filters-sidebar p-3 rounded shadow-sm">
             <h5 class="fw-bold mb-3">Filtros</h5>
@@ -443,13 +438,19 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary w-100 mt-3">Aplicar</button>
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn btn-primary w-50" id="apply-filters">
+                Aplicar
+              </button>
+              <button class="btn btn-outline-secondary w-50" id="clear-filters">
+                Limpar Filtros
+              </button>
+            </div>
           </div>
         </aside>
 
         <!-- COLUNA DOS RESULTADOS -->
         <section class="col-lg-9">
-          <!-- Cabeçalho da secção de resultados, com título e dropdown para ordenação -->
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="mb-0">Resultados em Lousada</h4>
             <div class="dropdown">
@@ -471,21 +472,19 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
           </div>
 
           <!-- Card de Resultado 1 -->
-          <!-- Usei uma linha com 'g-0' (sem espaçamento) para juntar a imagem e o conteúdo lado a lado -->
           <div class="card mb-3 shadow-sm result-card">
             <div class="row g-0">
               <div class="col-12 col-md-4">
                 <img
                   src="img/Resultado1.jpg"
                   class="img-fluid rounded-start"
-                  alt="Hotel Central"
+                  alt="Magnificent Hotel"
                 />
               </div>
               <div class="col-12 col-md-8">
-                <!-- 'd-flex flex-column' permite alinhar o preço e o botão no fundo do card com 'mt-auto' -->
                 <div class="card-body d-flex flex-column h-100 p-4">
                   <div>
-                    <h5 class="card-title fw-bold">Hotel Central</h5>
+                    <h5 class="card-title fw-bold">Magnificent Hotel</h5>
                     <div class="rating-stars mb-2">
                       <i class="bi bi-star-fill"></i
                       ><i class="bi bi-star-fill"></i
@@ -561,7 +560,7 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
             </div>
           </div>
 
-          <!-- Paginação para navegar entre as várias páginas de resultados -->
+          <!-- Paginação para navegar entre páginas -->
           <nav class="mt-4">
             <ul class="pagination justify-content-center">
               <li class="page-item disabled">
@@ -583,36 +582,71 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
     <!-- =================================================================
     MENU OFF-CANVAS PARA OS FILTROS EM MOBILE
     ================================================================== -->
-     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasFilters"
+      aria-labelledby="offcanvasFiltersLabel"
+    >
       <div class="offcanvas-header border-bottom">
         <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filtros</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
       </div>
-      
+
       <div class="offcanvas-body">
-        <!-- ESTA PARTE ESTAVA EM FALTA: O CONTEÚDO DOS FILTROS -->
         <div class="accordion" id="mobileFiltersAccordion">
-          
           <!-- Filtro: Tipo de Alojamento -->
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileTipo">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseMobileTipo"
+              >
                 Tipo de Alojamento
               </button>
             </h2>
-            <div id="collapseMobileTipo" class="accordion-collapse collapse show" data-bs-parent="#mobileFiltersAccordion">
+            <div
+              id="collapseMobileTipo"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#mobileFiltersAccordion"
+            >
               <div class="accordion-body">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoHotelMobile">
-                  <label class="form-check-label" for="tipoHotelMobile">Hotel</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoHotelMobile"
+                  />
+                  <label class="form-check-label" for="tipoHotelMobile"
+                    >Hotel</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoHostelMobile">
-                  <label class="form-check-label" for="tipoHostelMobile">Hostel</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoHostelMobile"
+                  />
+                  <label class="form-check-label" for="tipoHostelMobile"
+                    >Hostel</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoALMobile">
-                  <label class="form-check-label" for="tipoALMobile">Alojamento Local</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoALMobile"
+                  />
+                  <label class="form-check-label" for="tipoALMobile"
+                    >Alojamento Local</label
+                  >
                 </div>
               </div>
             </div>
@@ -621,23 +655,50 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
           <!-- Filtro: Comodidades -->
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileComodidades">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseMobileComodidades"
+              >
                 Comodidades
               </button>
             </h2>
-            <div id="collapseMobileComodidades" class="accordion-collapse collapse" data-bs-parent="#mobileFiltersAccordion">
+            <div
+              id="collapseMobileComodidades"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileFiltersAccordion"
+            >
               <div class="accordion-body">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="comodWiFiMobile">
-                  <label class="form-check-label" for="comodWiFiMobile">Wi-Fi Gratuito</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="comodWiFiMobile"
+                  />
+                  <label class="form-check-label" for="comodWiFiMobile"
+                    >Wi-Fi Gratuito</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="comodEstacMobile">
-                  <label class="form-check-label" for="comodEstacMobile">Estacionamento</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="comodEstacMobile"
+                  />
+                  <label class="form-check-label" for="comodEstacMobile"
+                    >Estacionamento</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="comodPiscinaMobile">
-                  <label class="form-check-label" for="comodPiscinaMobile">Piscina</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="comodPiscinaMobile"
+                  />
+                  <label class="form-check-label" for="comodPiscinaMobile"
+                    >Piscina</label
+                  >
                 </div>
               </div>
             </div>
@@ -646,27 +707,60 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
           <!-- Filtro: Tipo de Quarto -->
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileQuarto">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseMobileQuarto"
+              >
                 Tipo de Quarto
               </button>
             </h2>
-            <div id="collapseMobileQuarto" class="accordion-collapse collapse" data-bs-parent="#mobileFiltersAccordion">
+            <div
+              id="collapseMobileQuarto"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileFiltersAccordion"
+            >
               <div class="accordion-body">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoSingleMobile">
-                  <label class="form-check-label" for="tipoSingleMobile">Single</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoSingleMobile"
+                  />
+                  <label class="form-check-label" for="tipoSingleMobile"
+                    >Single</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoTwinMobile">
-                  <label class="form-check-label" for="tipoTwinMobile">Twin</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoTwinMobile"
+                  />
+                  <label class="form-check-label" for="tipoTwinMobile"
+                    >Twin</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoCasalMobile">
-                  <label class="form-check-label" for="tipoCasalMobile">Casal</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoCasalMobile"
+                  />
+                  <label class="form-check-label" for="tipoCasalMobile"
+                    >Casal</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="tipoSuiteMobile">
-                  <label class="form-check-label" for="tipoSuiteMobile">Suite</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="tipoSuiteMobile"
+                  />
+                  <label class="form-check-label" for="tipoSuiteMobile"
+                    >Suite</label
+                  >
                 </div>
               </div>
             </div>
@@ -675,32 +769,64 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
           <!-- Filtro: Classificação -->
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileClassificacao">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseMobileClassificacao"
+              >
                 Classificação
               </button>
             </h2>
-            <div id="collapseMobileClassificacao" class="accordion-collapse collapse" data-bs-parent="#mobileFiltersAccordion">
+            <div
+              id="collapseMobileClassificacao"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileFiltersAccordion"
+            >
               <div class="accordion-body">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="5EstrelasMobile">
-                  <label class="form-check-label" for="5EstrelasMobile">5 Estrelas</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="5EstrelasMobile"
+                  />
+                  <label class="form-check-label" for="5EstrelasMobile"
+                    >5 Estrelas</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="4EstrelasMobile">
-                  <label class="form-check-label" for="4EstrelasMobile">4 Estrelas</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="4EstrelasMobile"
+                  />
+                  <label class="form-check-label" for="4EstrelasMobile"
+                    >4 Estrelas</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="3EstrelasMobile">
-                  <label class="form-check-label" for="3EstrelasMobile">3 Estrelas</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="3EstrelasMobile"
+                  />
+                  <label class="form-check-label" for="3EstrelasMobile"
+                    >3 Estrelas</label
+                  >
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="2EstrelasMobile">
-                  <label class="form-check-label" for="2EstrelasMobile">2 Estrelas</label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="2EstrelasMobile"
+                  />
+                  <label class="form-check-label" for="2EstrelasMobile"
+                    >2 Estrelas</label
+                  >
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -708,9 +834,10 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
       <div class="offcanvas-footer p-3 border-top">
         <button class="btn btn-primary w-100">Aplicar Filtros</button>
       </div>
+      <div class="offcanvas-footer p-3 border-top">
+        <button class="btn btn-primary w-100">Limpar Filtros</button>
+      </div>
     </div>
-
-    
 
     <!-- =================================================================
     FOOTER

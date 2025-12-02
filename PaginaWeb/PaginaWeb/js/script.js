@@ -1,29 +1,37 @@
 /**
  * @file script.js
  * @description Script principal para o site StayIn
+ * 
+ * Índice:
+ * 1. Lógica Global: Selecionar Tema (Dark Mode)
+ * 2. Lógica Global: Autenticação e Estado da Navbar
+ * 3. Lógica de Login e Registo
+ * 4. Lógica da Homepage (Personalização e Conteúdo Dinâmico)
+ * 5. Lógica da Página Minha Conta
+ * 6. Lógica do Stepper e Formulário de Reserva
+ *    6.1. Interceptar Tecla Enter no Formulário de Reserva
+ * 7. Lógica da Página de Confirmação
+ * 8. Bloqueio de Acesso à Página de Reserva para Não Autenticados
+ * 9. Configuração do DateRangePicker (Check-in e Check-out)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // assim o codigo só atua quando o html carregar totalmente
+  // Assim garantimos que o JS só corre depois do HTML carregar 
 
   // =========================================================================
   // 1. LÓGICA GLOBAL: SELETOR DE TEMA (DARK MODE)
   // =========================================================================
+
   const getPreferredTheme = () => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
-      return storedTheme;
-    }
+    if (storedTheme) return storedTheme;
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
   };
 
   const setTheme = (theme) => {
-    if (
-      theme === "auto" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
+    if (theme === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.setAttribute("data-bs-theme", "dark");
     } else {
       document.documentElement.setAttribute("data-bs-theme", theme);
@@ -59,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   // 2. LÓGICA GLOBAL: AUTENTICAÇÃO E ESTADO DA NAVBAR
   // =========================================================================
+
   const loggedOutItems = document.querySelectorAll(".nav-logged-out");
   const loggedInItems = document.querySelectorAll(".nav-logged-in");
   const logoutButton = document.getElementById("logout-button");
@@ -67,15 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const navbarUsername = document.getElementById("navbar-username");
 
     if (localStorage.getItem("isLoggedIn") === "true") {
+      // Mostrar itens do utilizador autenticado
       loggedOutItems.forEach((item) => item.classList.add("d-none"));
       loggedInItems.forEach((item) => item.classList.remove("d-none"));
 
-      // Assim mostra o nome do utilizador na Navbar
+      // Atualizar o nome na navbar - muda consuante o nome que escolheres
       if (navbarUsername) {
         const userName = localStorage.getItem("userName") || "Utilizador";
         navbarUsername.innerText = userName;
       }
     } else {
+      // Mostrar itens de utilizador não autenticado
       loggedOutItems.forEach((item) => item.classList.remove("d-none"));
       loggedInItems.forEach((item) => item.classList.add("d-none"));
     }
@@ -85,68 +96,62 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutButton.addEventListener("click", (event) => {
       event.preventDefault();
       localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("userName"); // vai limpar o nome ao sair
+      localStorage.removeItem("userName");
       window.location.href = "index.html";
     });
   }
-  updateNavbarState(); // vai fazer isto em todas as paginas
+
+  // Chamar a função para deixar a navbar no estado certo
+  updateNavbarState();
 
   // =========================================================================
   // 3. LÓGICA DE LOGIN E REGISTO
   // =========================================================================
+
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", (event) => {
       event.preventDefault();
       localStorage.setItem("isLoggedIn", "true");
-      // Define um nome padrão no primeiro login
+
+      // Define o nome para "Viajante" se for o primeiro login, fica mais catita
       if (!localStorage.getItem("userName")) {
         localStorage.setItem("userName", "Viajante");
       }
-      window.location.href = "index.html"; // Redireciona para a homepage para ver a personalização
+      window.location.href = "index.html";
     });
   }
 
- const registerForm = document.getElementById("register-form");
-if (registerForm) {
-  registerForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const registerForm = document.getElementById("register-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-    if (registerForm.checkValidity()) {
-      // Formulário válido!
+      if (registerForm.checkValidity()) {
+        const firstName = document.getElementById("register-firstname").value.trim();
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userName", firstName);
+        window.location.href = "index.html";
+      }
 
-      // 1. Obter o primeiro nome do campo com o novo ID
-      const firstName = document.getElementById("register-firstname").value.trim();
-
-      // 2. Simular o login
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userName", firstName);
-
-      // 3. Redirecionar para a página principal
-      window.location.href = "index.html";
-      
-    } else {
-      // O formulário é inválido, o Bootstrap mostra os erros
-    }
-
-    registerForm.classList.add("was-validated");
-  });
-}
+      registerForm.classList.add("was-validated");
+    });
+  }
 
   // =========================================================================
   // 4. LÓGICA DA HOMEPAGE (PERSONALIZAÇÃO E CONTEÚDO DINÂMICO)
   // =========================================================================
+
   if (document.body.classList.contains("homepage")) {
+    // Só corre se estiver na homepage
     const ofertasSection = document.getElementById("ofertas-section");
-    const recomendacoesSection = document.getElementById(
-      "recomendacoes-section"
-    );
+    const recomendacoesSection = document.getElementById("recomendacoes-section");
     const heroTitle = document.getElementById("hero-title");
     const heroSubtitle = document.getElementById("hero-subtitle");
 
     if (localStorage.getItem("isLoggedIn") === "true") {
-      // 1. Personaliza a saudação do cabeçalho
+      // Personaliza o hero com o nome do utilizador
       const userName = localStorage.getItem("userName") || "Viajante";
       if (heroTitle) {
         heroTitle.innerText = `Para onde vamos agora, ${userName}?`;
@@ -156,50 +161,106 @@ if (registerForm) {
           "As suas próximas aventuras começam aqui. Inspire-se nas nossas recomendações.";
       }
 
-      // 2. Mostra as recomendações e esconde as ofertas
+      // Mostra recomendações, esconde ofertas
       if (ofertasSection) ofertasSection.style.display = "none";
       if (recomendacoesSection) recomendacoesSection.style.display = "block";
     } else {
-      // 3. Mostra as ofertas e esconde as recomendações para visitantes
+      // Mostra ofertas, esconde recomendações
       if (ofertasSection) ofertasSection.style.display = "block";
       if (recomendacoesSection) recomendacoesSection.style.display = "none";
     }
   }
 
   // =========================================================================
-  // 5. NOVA LÓGICA: PÁGINA "MINHA CONTA"
+  // 5. LÓGICA DA PÁGINA "MINHA CONTA"
   // =========================================================================
+
   const profileForm = document.getElementById("profile-form");
   if (profileForm) {
     const firstNameInput = document.getElementById("profile-firstname");
 
-    // Carrega o nome atual no campo do formulário
+    // Preenche o nome atual no input
     const currentName = localStorage.getItem("userName") || "";
     firstNameInput.value = currentName;
 
-    // Evento para guardar as alterações do perfil
     profileForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      event.stopPropagation();
+
+      let formIsValid = true;
+
+      // Validação de nome
       const newName = firstNameInput.value.trim();
-
-      if (newName) {
-        // Guarda o novo nome
-        localStorage.setItem("userName", newName);
-
-        // Atualiza a navbar imediatamente
-        updateNavbarState();
-
-        // Feedback para o utilizador
-        alert("Perfil atualizado com sucesso!");
+      const lastNameInput = document.getElementById("profile-lastname");
+      if (!newName) {
+        firstNameInput.classList.add("is-invalid");
+        formIsValid = false;
       } else {
-        alert("Por favor, insira um nome.");
+        firstNameInput.classList.remove("is-invalid");
+      }
+
+      if (!lastNameInput.value.trim()) {
+        lastNameInput.classList.add("is-invalid");
+        formIsValid = false;
+      } else {
+        lastNameInput.classList.remove("is-invalid");
+      }
+
+      // Validação de passwords (se estiver preenchida)
+      const currentPassword = document.getElementById("current-password");
+      const newPassword = document.getElementById("new-password");
+      const confirmPassword = document.getElementById("confirm-password");
+
+      currentPassword.classList.remove("is-invalid");
+      newPassword.classList.remove("is-invalid");
+      confirmPassword.classList.remove("is-invalid");
+
+      const isPasswordChange =
+        currentPassword.value.trim() !== "" ||
+        newPassword.value.trim() !== "" ||
+        confirmPassword.value.trim() !== "";
+
+      if (isPasswordChange) {
+        if (currentPassword.value.trim() === "") {
+          currentPassword.classList.add("is-invalid");
+          formIsValid = false;
+        }
+        if (newPassword.value.trim().length > 0 && newPassword.value.trim().length < 6) {
+          newPassword.classList.add("is-invalid");
+          formIsValid = false;
+        }
+        if (newPassword.value.trim() !== confirmPassword.value.trim()) {
+          confirmPassword.classList.add("is-invalid");
+          formIsValid = false;
+        }
+      }
+
+      // Se o formulário for válido, atualiza o perfil
+      if (formIsValid) {
+        localStorage.setItem("userName", newName);
+        alert("Perfil atualizado com sucesso!");
+
+        // Atualizar a navbar com o novo nome - muda consuante o nome que escolheres
+        if (typeof updateNavbarState === "function") {
+          updateNavbarState();
+        }
+
+        // Limpar os campos de password após a atualização
+        currentPassword.value = "";
+        newPassword.value = "";
+        confirmPassword.value = "";
+
+        profileForm.classList.remove("was-validated");
+      } else {
+        profileForm.classList.add("was-validated");
       }
     });
   }
 
-// =========================================================================
+  // =========================================================================
   // 6. LÓGICA DO STEPPER E FORMULÁRIO DE RESERVA
   // =========================================================================
+
   const bookingForm = document.getElementById("booking-form");
   if (bookingForm) {
     const stepperItems = document.querySelectorAll(".stepper .step");
@@ -208,79 +269,162 @@ if (registerForm) {
     const prevButtons = document.querySelectorAll(".prev-step-btn");
     let currentStep = 0;
 
-    // --- LÓGICA PARA MOSTRAR CAMPOS DE PAGAMENTO ---
+    // --- CAMPOS DE PAGAMENTO ---
     const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
-    const creditCardDetails = document.getElementById('credit-card-details');
-    const mbwayDetails = document.getElementById('mbway-details');
-    const ccFields = creditCardDetails.querySelectorAll('input');
+    const creditCardDetails = document.getElementById("credit-card-details");
+    const mbwayDetails = document.getElementById("mbway-details");
+    const paypalDetails = document.getElementById("paypal-details");
+    const ccFields = creditCardDetails ? creditCardDetails.querySelectorAll("input") : [];
+    const cardNumberField = document.getElementById("cardNumber");
+    const cardCVCField = document.getElementById("cardCVC");
+    const cardExpiryField = document.getElementById("cardExpiry");
+    const mbwayPhoneField = document.getElementById("mbway-phone");
+    const paypalEmailField = document.getElementById("paypal-email");
 
-    paymentMethodRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        // Esconde todas as secções de detalhes
-        creditCardDetails.classList.add('d-none');
-        mbwayDetails.classList.add('d-none');
-        // Remove 'required' de todos os campos de cartão e mbway
-        ccFields.forEach(field => field.required = false);
-        if (document.getElementById('mbway-phone')) {
-          document.getElementById('mbway-phone').required = false;
-        }
+    // Alternar campos de pagamento conforme o método que escolher
+    paymentMethodRadios.forEach((radio) => {
+      radio.addEventListener("change", () => {
+        if (creditCardDetails) creditCardDetails.classList.add("d-none");
+        if (mbwayDetails) mbwayDetails.classList.add("d-none");
+        if (paypalDetails) paypalDetails.classList.add("d-none");
 
-        if (radio.id === 'payment-cc' && radio.checked) {
-          creditCardDetails.classList.remove('d-none');
-          // Adiciona 'required' aos campos de cartão
-          ccFields.forEach(field => field.required = true);
-        } else if (radio.id === 'payment-mbway' && radio.checked) {
-          mbwayDetails.classList.remove('d-none');
-          document.getElementById('mbway-phone').required = true;
+        ccFields.forEach((field) => (field.required = false));
+        if (mbwayPhoneField) mbwayPhoneField.required = false;
+        if (paypalEmailField) paypalEmailField.required = false;
+
+        if (radio.id === "payment-cc" && radio.checked) {
+          creditCardDetails.classList.remove("d-none");
+          ccFields.forEach((field) => (field.required = true));
+        } else if (radio.id === "payment-mbway" && radio.checked) {
+          mbwayDetails.classList.remove("d-none");
+          if (mbwayPhoneField) mbwayPhoneField.required = true;
+        } else if (radio.id === "payment-paypal" && radio.checked) {
+          paypalDetails.classList.remove("d-none");
+          if (paypalEmailField) paypalEmailField.required = true;
         }
       });
     });
 
+    // --- VALIDAÇÃO DO CARTÃO DE CRÉDITO ---
+
+    // Validação do Número do Cartão
+    cardNumberField.addEventListener("input", () => {
+      const cardNumber = cardNumberField.value.replace(/\s+/g, ""); // Remove espaços
+      if (cardNumber.length < 16) {
+        cardNumberField.setCustomValidity("O número do cartão deve ter 16 dígitos.");
+      } else if (!/^\d{16,19}$/.test(cardNumber)) {
+        cardNumberField.setCustomValidity("Insira apenas dígitos (0-9).");
+      } else {
+        cardNumberField.setCustomValidity(""); // Válido
+      }
+    });
+
+    // Validação do CVC
+    cardCVCField.addEventListener("input", () => {
+      const cvc = cardCVCField.value;
+      if (cvc.length !== 3) {
+        cardCVCField.setCustomValidity("O CVC deve ter exatamente 3 dígitos.");
+      } else if (!/^\d{3}$/.test(cvc)) {
+        cardCVCField.setCustomValidity("O CVC deve conter apenas números.");
+      } else {
+        cardCVCField.setCustomValidity(""); // Válido
+      }
+    });
+
+    // Validação da Data de Validade (mínimo: mês atual, máximo: +5 anos)
+    if (cardExpiryField) {
+      const now = new Date();
+      const minYear = now.getFullYear();
+      const minMonth = String(now.getMonth() + 1).padStart(2, "0");
+      const minValue = `${minYear}-${minMonth}`; // Ex.: 2025-12
+
+      const maxYear = now.getFullYear() + 5;
+      const maxMonth = minMonth;
+      const maxValue = `${maxYear}-${maxMonth}`;
+
+      cardExpiryField.min = minValue;
+      cardExpiryField.max = maxValue;
+
+      const validateExpiryRange = () => {
+        const v = cardExpiryField.value; // 'YYYY-MM'
+        if (!v) {
+          cardExpiryField.setCustomValidity("");
+          return;
+        }
+        if (v < minValue) {
+          cardExpiryField.setCustomValidity("A validade não pode ser anterior ao mês atual.");
+        } else if (v > maxValue) {
+          cardExpiryField.setCustomValidity("A validade não pode ser superior a 5 anos a partir de agora.");
+        } else {
+          cardExpiryField.setCustomValidity("");
+        }
+      };
+
+      cardExpiryField.addEventListener("input", validateExpiryRange);
+      cardExpiryField.addEventListener("change", validateExpiryRange);
+    }
+
+    
     const showStep = (stepIndex) => {
-      formSteps.forEach(step => (step.style.display = "none"));
+      formSteps.forEach((step) => (step.style.display = "none"));
       if (formSteps[stepIndex]) formSteps[stepIndex].style.display = "block";
+
       
       stepperItems.forEach((step, index) => {
         step.classList.toggle("active", index < stepIndex + 1);
       });
+
       currentStep = stepIndex;
     };
+
     
     const validateCurrentStep = () => {
       let isValid = true;
-      const currentStepFields = formSteps[currentStep].querySelectorAll("input[required]");
-      currentStepFields.forEach(field => {
+      const currentStepFields = formSteps[currentStep].querySelectorAll(
+        "input[required], select[required]"
+      );
+
+      currentStepFields.forEach((field) => {
         if (!field.checkValidity()) {
           isValid = false;
+          field.classList.add("is-invalid");
+        } else {
+          field.classList.remove("is-invalid");
+          field.classList.add("is-valid");
         }
       });
       return isValid;
     };
 
+    // Preenche o resumo final (passo de confirmação)
     const populateConfirmationStep = () => {
       document.getElementById("confirm-nome").innerText = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`;
       document.getElementById("confirm-email").innerText = document.getElementById("email").value;
-      // Atualiza para mostrar o método de pagamento selecionado
+
       const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
-      document.getElementById("confirm-pagamento").innerText = selectedPayment ? selectedPayment.value : "Não selecionado";
+      document.getElementById("confirm-pagamento").innerText = selectedPayment
+        ? selectedPayment.value
+        : "Não selecionado";
     };
 
-    nextButtons.forEach(button => {
+    
+    nextButtons.forEach((button) => {
       button.addEventListener("click", () => {
         if (validateCurrentStep()) {
-          if (currentStep === 1) { // Ao sair do passo de pagamento
-            populateConfirmationStep();
+          if (currentStep === 1) {
+            populateConfirmationStep(); 
           }
           if (currentStep < formSteps.length - 1) {
             showStep(currentStep + 1);
           }
         } else {
-          bookingForm.classList.add("was-validated");
+          bookingForm.classList.add("was-validated"); 
         }
       });
     });
 
-    prevButtons.forEach(button => {
+    
+    prevButtons.forEach((button) => {
       button.addEventListener("click", () => {
         if (currentStep > 0) {
           showStep(currentStep - 1);
@@ -288,12 +432,17 @@ if (registerForm) {
       });
     });
 
+    
     bookingForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Impede o envio padrão do formulário
+      event.preventDefault();
+      if (!bookingForm.checkValidity()) {
+        bookingForm.classList.add("was-validated");
+        return;
+      }
+
       
-      // 1. Guardar os detalhes da reserva no localStorage
       const reservaDetalhes = {
-        alojamento: "Hotel Central", // Exemplo, pode ser dinâmico
+        alojamento: "Hotel Central",
         checkin: document.getElementById("resumo-checkin").innerText,
         checkout: document.getElementById("resumo-checkout").innerText,
         hospedes: document.getElementById("resumo-hospedes").innerText,
@@ -301,52 +450,49 @@ if (registerForm) {
       };
       localStorage.setItem("reservaDetalhes", JSON.stringify(reservaDetalhes));
 
-      // 2. Mostrar o spinner de carregamento no botão
+      
       const finalButton = document.querySelector('#booking-form button[type="submit"]');
       if (finalButton) {
         finalButton.disabled = true;
         finalButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> A Processar...`;
       }
 
-      // 3. Simular o processamento e redirecionar para a página de confirmação
+      // Simular o processamento e redirecionar
       setTimeout(() => {
         window.location.href = "confirmacao.html";
-      }, 1500); // Espera 1.5 segundos (como nos sites de reserva normais)
+      }, 1500);
     });
 
+    // Mostrar o primeiro passo ao carregar
     if (formSteps.length > 0) {
       showStep(0);
     }
 
     // =========================================================================
-    // 6.1. Interceptar a tecla Enter (para evitar submissão antes da hora)
+    // 6.1. INTERCEPTAR A TECLA ENTER NO FORMULÁRIO DE RESERVA
     // =========================================================================
 
     bookingForm.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        event.preventDefault(); // Sempre prevenir o comportamento padrão do Enter
+        event.preventDefault(); // Ao clicar Enter ele avançava o formulário, agora não
 
-        // Vamos verificar em qual passo estamos
         if (currentStep === 0) {
-          // Se estivermos no Passo 1 (Dados Pessoais), Enter avança para o próximo passo
+          
           if (validateCurrentStep()) {
-            showStep(1); // Avança para o passo 2
+            showStep(1);
           } else {
-            // Forçar validação visual se falta algum campo
             bookingForm.classList.add("was-validated");
           }
         } else if (currentStep === 1) {
-          // Se estivermos no Passo 2 (Pagamento), Enter avança para a confirmação
+          
           if (validateCurrentStep()) {
-            populateConfirmationStep(); // Preenche o resumo da confirmação
-            showStep(2); // Avança para o passo 3 (Confirmação)
+            populateConfirmationStep();
+            showStep(2);
           } else {
-            // Forçar validação visual se falta algum campo
             bookingForm.classList.add("was-validated");
           }
-        } else if (currentStep === 2) {
-          
         }
+        // No Passo 3, Enter não faz nada 
       }
     });
   }
@@ -354,37 +500,59 @@ if (registerForm) {
   // =========================================================================
   // 7. LÓGICA DA PÁGINA DE CONFIRMAÇÃO
   // =========================================================================
+
   const confirmationPage = document.querySelector(".confirmation-summary");
   if (confirmationPage) {
-    // 1. Procura os detalhes da reserva que foram guardados no localStorage
     const detalhes = JSON.parse(localStorage.getItem("reservaDetalhes"));
 
-    // 2. Verifica se os detalhes existem (para evitar erros)
     if (detalhes) {
-      // 3. Preenche os elementos na página com a informação da reserva
+      // Preenche os dados da reserva na página de confirmação
       document.getElementById("conf-alojamento").innerText = detalhes.alojamento;
       document.getElementById("conf-checkin").innerText = detalhes.checkin;
       document.getElementById("conf-checkout").innerText = detalhes.checkout;
       document.getElementById("conf-hospedes").innerText = detalhes.hospedes;
       document.getElementById("conf-preco").innerText = detalhes.preco;
 
-      // 4. Limpa os detalhes do localStorage depois de os mostrar
-      // Isto impede que a mesma informação seja mostrada numa visita futura à página.
+      
       localStorage.removeItem("reservaDetalhes");
     }
   }
 
-// =========================================================================
+  // =========================================================================
   // 8. BLOQUEIO DE ACESSO À PÁGINA DE RESERVA PARA NÃO AUTENTICADOS
   // =========================================================================
-  // Verifica se estamos na página de reserva
+  // Se nao tens login, nao reservas nada.
   if (window.location.pathname.includes("reserva.html")) {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     if (!isLoggedIn) {
-      // Se não estiver autenticado, redireciona para a página de login
+      // Se não estiver autenticado, manda para o login
       window.location.href = "login.html";
     }
   }
 
+  // =========================================================================
+  // 9. CONFIGURAÇÃO DO DATERANGEPICKER (CHECK-IN E CHECK-OUT)
+  // =========================================================================
 
-});
+  $(document).ready(function () {
+    $('input[name="daterange"]').daterangepicker({
+      opens: 'center',
+      autoApply: true,
+      minDate: moment().startOf('day'), // Bloqueia datas anteriores á data atual, tal como nos sites de reservas atuais
+      locale: {
+        format: 'DD/MM/YYYY',
+        applyLabel: 'Aplicar',
+        cancelLabel: 'Cancelar',
+        fromLabel: 'De',
+        toLabel: 'Até',
+        daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        monthNames: [
+          'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ],
+        firstDay: 1 // Começa a semana na segunda-feira
+      }
+    });
+  });
+
+}); 

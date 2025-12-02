@@ -23,11 +23,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="/img/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" href="img/android-chrome-512x512.png" />
   </head>
   <body>
     <!-- =================================================================
@@ -127,155 +123,172 @@
               </button>
             </div>
 
-            <!-- PASSO 2: PAGAMENTO -->
-            <div id="step-2" class="form-step" style="display: none">
-              <div class="card shadow-sm mb-4">
-                <div class="card-header">
-                  <h5 class="mb-0">
-                    <i class="bi bi-wallet2 me-2"></i>Escolha o Método de
-                    Pagamento
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <!-- Opções de Escolha com Radio Buttons -->
-                  <div class="mb-3">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="payment-cc"
-                        value="Cartão de Crédito"
-                        required
-                      />
-                      <label class="form-check-label" for="payment-cc">
-                        <i class="bi bi-credit-card-fill me-2"></i> Cartão de
-                        Crédito
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="payment-mbway"
-                        value="MB WAY"
-                        required
-                      />
-                      <label class="form-check-label" for="payment-mbway">
-                        <i class="bi bi-phone-fill me-2"></i> MB WAY
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="payment-paypal"
-                        value="PayPal"
-                        required
-                      />
-                      <label class="form-check-label" for="payment-paypal">
-                        <i class="bi bi-paypal me-2"></i> PayPal
-                      </label>
-                      <div class="invalid-feedback mt-2">
-                        Por favor, selecione um método de pagamento.
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
+           <!-- PASSO 2: PAGAMENTO -->
+<div id="step-2" class="form-step" style="display: none">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">
+        <i class="bi bi-wallet2 me-2"></i>Escolha o Método de Pagamento
+      </h5>
+    </div>
+    <div class="card-body">
+      <!-- Opções de Escolha com Radio Buttons -->
+      <div class="mb-3">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="paymentMethod"
+            id="payment-cc"
+            value="Cartão de Crédito"
+            required
+          />
+          <label class="form-check-label" for="payment-cc">
+            <i class="bi bi-credit-card-fill me-2"></i> Cartão de Crédito
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="paymentMethod"
+            id="payment-mbway"
+            value="MB WAY"
+            required
+          />
+          <label class="form-check-label" for="payment-mbway">
+            <i class="bi bi-phone-fill me-2"></i> MB WAY
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="paymentMethod"
+            id="payment-paypal"
+            value="PayPal"
+            required
+          />
+          <label class="form-check-label" for="payment-paypal">
+            <i class="bi bi-paypal me-2"></i> PayPal
+          </label>
+          <div class="invalid-feedback mt-2">
+            Por favor, selecione um método de pagamento.
+          </div>
+        </div>
+      </div>
+      <hr />
 
-                  <!-- Detalhes do Cartão de Crédito (escondidos por defeito) -->
-                  <div id="credit-card-details" class="d-none">
-                    <h6 class="mb-3">Detalhes do Cartão</h6>
-                    <div class="mb-3">
-                      <label for="cardName" class="form-label"
-                        >Nome no Cartão</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="cardName"
-                        placeholder="Miguel Mangueiras"
-                        autocomplete="cc-name"
-                      />
-                      <div class="invalid-feedback">Obrigatório.</div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="cardNumber" class="form-label"
-                        >Número do Cartão</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        size="19"
-                        maxlength="19"
-                        id="cardNumber"
-                        placeholder="xxxx xxxx xxxx xxxx"
-                      />
-                      <div class="invalid-feedback">Obrigatório.</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label for="cardExpiry" class="form-label"
-                          >Validade</label
-                        >
-                        <input
-                          type="month"
-                          class="form-control"
-                          id="cardExpiry"
-                          placeholder="MM/AAAA"
-                        />
-                        <div class="invalid-feedback">Obrigatório.</div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="cardCVC" class="form-label">CVC</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="cardCVC"
-                          size="3"
-                          maxlength="3"
-                          placeholder="123"
-                        />
-                        <div class="invalid-feedback">Obrigatório.</div>
-                      </div>
-                    </div>
-                  </div>
+      <!-- Detalhes do Cartão de Crédito (escondidos por defeito) -->
+<div id="credit-card-details" class="d-none">
+  <h6 class="mb-3">Detalhes do Cartão</h6>
+  <div class="mb-3">
+    <label for="cardName" class="form-label">Nome no Cartão</label>
+    <input
+      type="text"
+      class="form-control"
+      id="cardName"
+      placeholder="Miguel Mangueiras"
+      autocomplete="cc-name"
+      required
+    />
+    <div class="invalid-feedback">Obrigatório. Insira o nome como aparece no cartão.</div>
+  </div>
 
-                  <!-- Placeholder para MB WAY (escondido) -->
-                  <div id="mbway-details" class="d-none">
-                    <label for="mbway-phone" class="form-label"
-                      >Número de Telemóvel</label
-                    >
-                    <input
-                      type="tel"
-                      class="form-control"
-                      id="mbway-phone"
-                      pattern="[0-9]{9}"
-                      inputmode="numeric"
-                      maxlength="9"
-                      placeholder="912 345 678"
-                    />
-                    <div class="form-text">
-                      Irá receber uma notificação na app MB WAY para confirmar o
-                      pagamento.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary prev-step-btn"
-                >
-                  Voltar
-                </button>
-                <button type="button" class="btn btn-primary next-step-btn">
-                  Próximo Passo: Confirmação
-                </button>
-              </div>
-            </div>
+  <div class="mb-3">
+    <label for="cardNumber" class="form-label">Número do Cartão</label>
+    <input
+      type="text"
+      class="form-control"
+      id="cardNumber"
+      placeholder="xxxx xxxx xxxx xxxx"
+      maxlength="19"
+      minlength="16"
+      pattern="[0-9 ]{16,19}"
+      inputmode="numeric"
+      required
+    />
+    <div class="invalid-feedback">Obrigatório. Insira um número de cartão válido (16 dígitos).</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="cardExpiry" class="form-label">Validade</label>
+      <input
+        type="month"
+        class="form-control"
+        id="cardExpiry"
+        placeholder="MM/AAAA"
+        required
+      />
+      <div class="invalid-feedback">Obrigatório. Insira uma validade válida.</div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="cardCVC" class="form-label">CVC</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cardCVC"
+        placeholder="123"
+        maxlength="3"
+        minlength="3"
+        pattern="[0-9]{3}"
+        inputmode="numeric"
+        required
+      />
+      <div class="invalid-feedback">Obrigatório. O CVC deve ter 3 dígitos.</div>
+    </div>
+  </div>
+</div>
+
+      <!-- Placeholder para MB WAY (escondido) -->
+      <div id="mbway-details" class="d-none">
+        <label for="mbway-phone" class="form-label">Número de Telemóvel</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="mbway-phone"
+          pattern="[0-9]{9}"
+          inputmode="numeric"
+          maxlength="9"
+          placeholder="912 345 678"
+        />
+        <div class="form-text">
+          Irá receber uma notificação na app MB WAY para confirmar o pagamento.
+        </div>
+      </div>
+
+      <!-- Placeholder para PayPal (escondido) -->
+      <div id="paypal-details" class="d-none">
+        <h6 class="mb-3">Detalhes do PayPal</h6>
+        <div class="mb-3">
+          <label for="paypal-email" class="form-label">Email da Conta PayPal</label>
+          <input
+            type="email"
+            class="form-control"
+            id="paypal-email"
+            placeholder="email@exemplo.com"
+            autocomplete="email"
+          />
+          <div class="invalid-feedback">Por favor, insira um email válido.</div>
+        </div>
+        <div class="form-text">
+          Será redirecionado para o PayPal para concluir o pagamento.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-secondary prev-step-btn">
+      Voltar
+    </button>
+    <button type="button" class="btn btn-primary next-step-btn">
+      Próximo Passo: Confirmação
+    </button>
+  </div>
+</div>
 
             <!-- PASSO 3: CONFIRMAÇÃO FINAL -->
             <div id="step-3" class="form-step" style="display: none">
@@ -322,11 +335,11 @@
       <img
         src="img/Resultado1.jpg"
         class="card-img-top"
-        alt="Hotel Central"
+        alt="Magnificent Hotel"
         style="height: 400px"
       />
       <div class="card-body p-4">
-        <h5 class="card-title fw-bold">Hotel Central</h5>
+        <h5 class="card-title fw-bold">Magnificent Hotel</h5>
         <p class="small text-muted">
           <i class="bi bi-geo-alt-fill me-1"></i>Lousada
         </p>
@@ -344,6 +357,14 @@
           <span class="text-muted">Total de hóspedes</span>
           <span id="resumo-hospedes">2 Adultos</span>
         </div>
+        <div class="d-flex justify-content-between small">
+          <span class="text-muted">Tipo de quarto</span>
+          <span id="resumo-hospedes">Duplo Standard</span>
+        </div>
+        <div class="d-flex justify-content-between small">
+          <span class="text-muted">Nº de quartos</span>
+          <span id="resumo-hospedes">1</span>
+        </div>
         <hr />
         <h6 class="fw-semibold">Resumo do custo</h6>
         <div class="d-flex justify-content-between small mt-2">
@@ -358,14 +379,10 @@
           <span class="text-muted">Subtotal</span>
           <span id="subtotal">€110,00</span>
         </div>
-        <div class="d-flex justify-content-between small">
-          <span class="text-muted">Taxa de turismo</span>
-          <span id="taxa-turismo">€12,00</span>
-        </div>
         <hr />
         <div class="d-flex justify-content-between align-items-center mt-2">
           <span class="fw-bold fs-5">Preço Total</span>
-          <span class="fw-bold fs-4 text-primary" id="resumo-preco">€122,00</span>
+          <span class="fw-bold fs-4 text-primary" id="resumo-preco">€110,00</span>
         </div>
       </div>
     </div>
