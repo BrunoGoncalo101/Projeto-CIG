@@ -8,9 +8,7 @@
    5. Responsividade e Melhorias Mobile
    ========================================================================== */
 
-/* ==========================================================================
-   1. Configurações Globais (Variáveis de Cor, Body, Tipografia)
-   ========================================================================== */
+/* 1. Configurações Globais (Variáveis de Cor, Body, Tipografia) */
 
 /* Paleta de cores para o tema claro (Light Mode) */
 :root {
@@ -140,8 +138,7 @@
   }
 }
 
-/* ==========================================================================
-   Breadcrumb   ========================================================================== */
+/* Breadcrumb  */
 .breadcrumb-container {
   background-color: transparent !important;
   border-bottom: none !important;
@@ -198,9 +195,7 @@ small,
   color: var(--primary-color) !important;
 }
 
-/* ==========================================================================
-   2. Estrutura Principal (Navbar, Footer)
-   ========================================================================== */
+/* 2. Estrutura Principal (Navbar, Footer) */
 .navbar {
   transition: background-color 0.4s ease-in-out;
 }
@@ -245,9 +240,7 @@ footer {
   padding: 2rem 0;
 }
 
-/* ==========================================================================
-   3. Componentes Reutilizáveis (Botões, Cards, Estrelas, etc.)
-   ========================================================================== */
+/* 3. Componentes Reutilizáveis (Botões, Cards, Estrelas, etc.) */
 .btn-primary {
   background-color: var(--primary-color);
   border: none;
@@ -285,9 +278,7 @@ footer {
   background-color: var(--primary-color);
 }
 
-/* ==========================================================================
-   4. Layouts de Página Específicos
-   ========================================================================== */
+/* 4. Layouts de Página Específicos */
 
 /* --- Homepage --- */
 .hero-section {
@@ -542,9 +533,7 @@ footer {
   }
 }
 
-/* ==========================================================================
-   5. Responsividade e Melhorias Mobile
-   ========================================================================== */
+/* 5. Responsividade e Melhorias Mobile */
 .custom-toggler.navbar-toggler {
   border: none;
 }
@@ -746,13 +735,9 @@ footer {
   }
 }
 
-/* ==========================================================================
-   6. CORREÇÕES FINAIS (Carrossel Híbrido: PC vs Mobile)
-   ========================================================================== */
+/* 6. CORREÇÕES FINAIS (Carrossel Híbrido: PC vs Mobile) */
 
-/* ============================================================
-         1. REGRAS GERAIS (LIMPEZA E BOTÕES)
-         ============================================================ */
+/* 1. Regras gerais */
 
 /* Limpeza de linhas e bordas */
 .carousel-inner,
@@ -796,10 +781,7 @@ footer {
   color: white !important;
 }
 
-/* ============================================================
-         2. REGRAS PARA COMPUTADOR (Ecrã Grande)
-         Carrossel ATIVO com setas "dentro" da imagem
-         ============================================================ */
+/* 2. Regras para computador (Ecrã Grande) */
 @media (min-width: 992px) {
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
@@ -818,10 +800,7 @@ footer {
   }
 }
 
-/* ============================================================
-         3. REGRAS PARA TABLET E TELEMÓVEL (Ecrã Pequeno)
-         Carrossel DESATIVADO -> Lista Vertical (Scroll)
-         ============================================================ */
+/* 3. Regras para tablet e telemóvel (Ecrã pequeno) */
 @media (max-width: 991.98px) {
   .carousel-control-prev,
   .carousel-control-next {

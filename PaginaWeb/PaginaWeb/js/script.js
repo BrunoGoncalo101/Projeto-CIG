@@ -18,9 +18,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Assim garantimos que o JS só corre depois do HTML carregar 
 
-  // =========================================================================
-  // 1. LÓGICA GLOBAL: SELETOR DE TEMA (DARK MODE)
-  // =========================================================================
+  
+  // 1. Lógica Global: Selecionar Tema (Dark Mode)
+ 
 
   const getPreferredTheme = () => {
     const storedTheme = localStorage.getItem("theme");
@@ -64,9 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // =========================================================================
-  // 2. LÓGICA GLOBAL: AUTENTICAÇÃO E ESTADO DA NAVBAR
-  // =========================================================================
+  // 2. Lógica Global: Autenticação e Estado da Navbar
+  
 
   const loggedOutItems = document.querySelectorAll(".nav-logged-out");
   const loggedInItems = document.querySelectorAll(".nav-logged-in");
@@ -104,9 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Chamar a função para deixar a navbar no estado certo
   updateNavbarState();
 
-  // =========================================================================
-  // 3. LÓGICA DE LOGIN E REGISTO
-  // =========================================================================
+  
+  // 3. Lógica de Login e Registo
+  
 
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
@@ -139,9 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =========================================================================
-  // 4. LÓGICA DA HOMEPAGE (PERSONALIZAÇÃO E CONTEÚDO DINÂMICO)
-  // =========================================================================
+  
+
+  // 4. Lógica da Homepage (Personalização e Conteúdo Dinâmico)
+  
 
   if (document.body.classList.contains("homepage")) {
     // Só corre se estiver na homepage
@@ -171,9 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // =========================================================================
-  // 5. LÓGICA DA PÁGINA "MINHA CONTA"
-  // =========================================================================
+  
+  // 5. Lógica da Página "Minha Conta"
+  
 
   const profileForm = document.getElementById("profile-form");
   if (profileForm) {
@@ -257,9 +257,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =========================================================================
-  // 6. LÓGICA DO STEPPER E FORMULÁRIO DE RESERVA
-  // =========================================================================
+  
+  // 6. Lógica do Stepper e Formulário de Reserva
+   
 
   const bookingForm = document.getElementById("booking-form");
   if (bookingForm) {
@@ -468,9 +468,9 @@ document.addEventListener("DOMContentLoaded", () => {
       showStep(0);
     }
 
-    // =========================================================================
-    // 6.1. INTERCEPTAR A TECLA ENTER NO FORMULÁRIO DE RESERVA
-    // =========================================================================
+    
+    // 6.1. Interceptar a Tecla Enter no Formulário de Reserva
+    
 
     bookingForm.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
@@ -497,9 +497,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =========================================================================
-  // 7. LÓGICA DA PÁGINA DE CONFIRMAÇÃO
-  // =========================================================================
+   
+  // 7. Lógica da Página de Confirmação
+  
 
   const confirmationPage = document.querySelector(".confirmation-summary");
   if (confirmationPage) {
@@ -518,9 +518,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // =========================================================================
-  // 8. BLOQUEIO DE ACESSO À PÁGINA DE RESERVA PARA NÃO AUTENTICADOS
-  // =========================================================================
+  
+  // 8. Bloqueio de Acesso à Página de Reserva para Não Autenticados
+  
   // Se nao tens login, nao reservas nada.
   if (window.location.pathname.includes("reserva.html")) {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -530,9 +530,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // =========================================================================
-  // 9. CONFIGURAÇÃO DO DATERANGEPICKER (CHECK-IN E CHECK-OUT)
-  // =========================================================================
+   
+  // 9. Configuração do Daterangepicker (Check-in e Check-out)
+  
 
   $(document).ready(function () {
     $('input[name="daterange"]').daterangepicker({

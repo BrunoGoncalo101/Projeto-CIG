@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt">
   <head>
-    <!-- Configurações e links essenciais da página -->
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resultados para Lousada - StayIn</title>
@@ -33,13 +33,8 @@
   </head>
 
   <body>
-    <!-- =================================================================
-BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
-================================================================== -->
-    <!-- A classe 'navbar-transparent' só deve ser usada na nav do index.html -->
-    <!-- Nas outras páginas, use 'navbar-scrolled' como já faz -->
+    <!-- BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS) -->
     <nav class="navbar navbar-expand-xl navbar-dark fixed-top">
-      <!-- Remova/adicione navbar-transparent ou navbar-scrolled aqui dependendo da página -->
       <div class="container">
         <a class="navbar-brand fw-bold" href="index.html"
           >Stay<span class="logoColor">In</span></a
@@ -186,19 +181,14 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
       </div>
     </nav>
 
-    <!-- =================================================================
-    BREADCRUMB
-    ================================================================== -->
-    <!-- Ajuda o utilizador a saber onde está e a navegar de volta facilmente -->
+    <!-- BREADCRUMB -->
     <div class="container small py-2">
       <a href="index.html" class="text-muted text-decoration-none">Início</a>
       <span class="breadcrumb-separator"> >> </span>
       <strong class="text-dark">Resultados da pesquisa</strong>
     </div>
 
-    <!-- =================================================================
-    CONTEÚDO PRINCIPAL
-    ================================================================== -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="container my-5">
       <!-- Botão para abrir os filtros em ecrãs pequenos -->
       <!-- A classe 'd-lg-none' faz com que este botão só apareça em ecrãs pequenos -->
@@ -216,7 +206,6 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
       <!-- Grelha principal: divide a página em Filtros (esquerda) e Resultados (direita) -->
       <div class="row">
         <!-- COLUNA DOS FILTROS -->
-        <!-- As classes 'd-none d-lg-block' escondem esta sidebar em mobile e mostram em desktop -->
 
         <aside class="col-lg-3 d-none d-lg-block">
           <div class="filters-sidebar p-3 rounded shadow-sm">
@@ -579,9 +568,7 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
       </div>
     </main>
 
-    <!-- =================================================================
-    MENU OFF-CANVAS PARA OS FILTROS EM MOBILE
-    ================================================================== -->
+    <!-- MENU OFF-CANVAS PARA OS FILTROS EM MOBILE -->
     <div
       class="offcanvas offcanvas-start"
       tabindex="-1"
@@ -839,18 +826,14 @@ BARRA DE NAVEGAÇÃO PADRÃO (USAR EM TODAS AS PÁGINAS)
       </div>
     </div>
 
-    <!-- =================================================================
-    FOOTER
-    ================================================================== -->
+    <!-- FOOTER -->
     <footer class="py-3">
       <div class="container text-center text-white">
         <small>© 2025 StayIn • Termos de utilização • Contactos</small>
       </div>
     </footer>
 
-    <!-- =================================================================
-    SCRIPTS JAVASCRIPT
-    ================================================================== -->
+    <!-- SCRIPTS JAVASCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js" defer></script>
   </body>
