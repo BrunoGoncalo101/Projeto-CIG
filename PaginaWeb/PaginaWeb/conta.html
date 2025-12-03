@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
   <head>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minha Conta - StayIn</title>
@@ -324,16 +323,17 @@
                         class="form-control"
                         id="profile-email"
                         value="utilizador@exemplo.com"
-                        disabled
+                        required
                       />
                     </div>
                   </div>
                 </div>
-
-                <!-- Alterar Password -->
+                <!-- Card: Alterar Password -->
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Alterar Password</h5>
+
+                    <!-- Campo Password Atual -->
                     <div class="mb-3">
                       <label for="current-password" class="form-label"
                         >Password Atual</label
@@ -343,7 +343,12 @@
                         class="form-control"
                         id="current-password"
                       />
+                      <div class="invalid-feedback">
+                        Por favor, insira a password atual.
+                      </div>
                     </div>
+
+                    <!-- Campo Nova Password -->
                     <div class="mb-3">
                       <label for="new-password" class="form-label"
                         >Nova Password</label
@@ -353,8 +358,13 @@
                         class="form-control"
                         id="new-password"
                       />
+                      <div class="invalid-feedback">
+                        A nova password deve ter pelo menos 6 caracteres.
+                      </div>
                     </div>
-                    <div>
+
+                    <!-- Campo Confirmar Nova Password -->
+                    <div class="mb-3">
                       <label for="confirm-password" class="form-label"
                         >Confirmar Nova Password</label
                       >
@@ -363,6 +373,9 @@
                         class="form-control"
                         id="confirm-password"
                       />
+                      <div class="invalid-feedback">
+                        As passwords não coincidem. Tente novamente.
+                      </div>
                     </div>
                   </div>
                 </div>

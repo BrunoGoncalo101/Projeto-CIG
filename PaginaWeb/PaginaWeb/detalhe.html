@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
   <head>
-   
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Magnificent Hotel - Detalhes - StayIn</title>
@@ -35,7 +34,9 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-xl navbar-dark fixed-top navbar-scrolled">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">Stay<span class="logoColor">In</span></a>
+        <a class="navbar-brand fw-bold" href="index.html"
+          >Stay<span class="logoColor">In</span></a
+        >
         <button
           class="navbar-toggler custom-toggler"
           type="button"
@@ -366,59 +367,117 @@
           </div>
 
           <!-- LISTA DE QUARTOS DISPONÍVEIS -->
-          <h4 class="fw-bold section-header">Selecione o seu Quarto</h4>
+          <h4 class="fw-bold section-header mb-4">
+            Selecione o(s) seu(s) Quarto(s)
+          </h4>
           <div class="list-group">
             <!-- Quarto Disponível 1 -->
             <div
-              class="list-group-item room-list-item d-md-flex justify-content-between align-items-center"
+              class="list-group-item room-list-item d-md-flex justify-content-between align-items-center py-3"
             >
-              <div>
+              <!-- Informações do Quarto -->
+              <div class="mb-2 mb-md-0">
                 <h6 class="fw-bold mb-1">Quarto Duplo Standard</h6>
-                <small class="text-muted"
-                  ><i class="bi bi-people-fill me-1"></i>2 Adultos •
-                  <i class="bi bi-aspect-ratio-fill mx-1"></i>25 m²</small
-                >
+                <small class="text-muted">
+                  <i class="bi bi-people-fill me-1"></i>2 Adultos •
+                  <i class="bi bi-aspect-ratio-fill mx-1"></i>25 m²
+                </small>
               </div>
-              <div class="text-md-end mt-3 mt-md-0">
-                <p class="fw-bold fs-5 text-primary mb-1">€55 / noite</p>
-                <a href="reserva.html" class="btn btn-primary btn-sm"
-                  >Selecionar</a
-                >
+
+              
+              <div class="text-md-end">
+                <p class="fw-bold fs-5 text-primary mb-2">€55 / noite</p>
+
+               
+                <div class="d-flex align-items-center justify-content-end">
+                  <!-- Campo de Número de Quartos -->
+                  <div>
+                    <label
+                      for="num-quartos-1"
+                      class="form-label me-2 mb-0 small"
+                      >Nº de Quartos:</label
+                    >
+                  </div>
+                  <div class="me-2">
+                    <input
+                      type="number"
+                      id="num-quartos-1"
+                      class="form-control form-control-sm"
+                      style="width: 70px"
+                      min="0"
+                      placeholder="0"
+                    />
+                    <div class="invalid-feedback small">Mínimo 1 quarto.</div>
+                  </div>
+
+                  
+                  
+                </div>
               </div>
             </div>
+
             <!-- Quarto Disponível 2 -->
             <div
-              class="list-group-item room-list-item d-md-flex justify-content-between align-items-center"
+              class="list-group-item room-list-item d-md-flex justify-content-between align-items-center py-3"
             >
-              <div>
-                <h6 class="fw-bold mb-1">Suite Superior com Varanda</h6>
-                <small class="text-muted"
-                  ><i class="bi bi-people-fill me-1"></i>2 Adultos + 1 Criança •
-                  <i class="bi bi-aspect-ratio-fill mx-1"></i>45 m²</small
-                >
+              <!-- Informações do Quarto -->
+              <div class="mb-2 mb-md-0">
+                <h6 class="fw-bold mb-1">Quarto Familiar</h6>
+                <small class="text-muted">
+                  <i class="bi bi-people-fill me-1"></i>4 Adultos •
+                  <i class="bi bi-aspect-ratio-fill mx-1"></i>50 m²
+                </small>
               </div>
-              <div class="text-md-end mt-3 mt-md-0">
-                <p class="fw-bold fs-5 text-primary mb-1">€90 / noite</p>
-                <a href="reserva.html" class="btn btn-primary btn-sm"
-                  >Selecionar</a
-                >
+
+              
+              <div class="text-md-end">
+                <p class="fw-bold fs-5 text-primary mb-2">€90 / noite</p>
+
+                
+                <div class="d-flex align-items-center justify-content-end">
+                  <!-- Campo de Número de Quartos -->
+                  <div>
+                    <label
+                      for="num-quartos-2"
+                      class="form-label me-2 mb-0 small"
+                      >Nº de Quartos:</label
+                    >
+                  </div>
+                  <div class="me-2">
+                    <input
+                      type="number"
+                      id="num-quartos-2"
+                      class="form-control form-control-sm"
+                      style="width: 70px"
+                      min="0"
+                      placeholder="0"
+                    />
+                    <div class="invalid-feedback small">Mínimo 1 quarto.</div>
+                  </div>
+
+                 
+                  
+                </div>
               </div>
             </div>
+
             <!-- Quarto INDISPONÍVEL (Esgotado) -->
             <div
-              class="list-group-item d-md-flex justify-content-between align-items-center disabled"
-              aria-disabled="true"
+              class="list-group-item room-list-item d-md-flex justify-content-between align-items-center py-3"
             >
-              <div>
+              <!-- Informações do Quarto -->
+              <div class="mb-2 mb-md-0">
                 <h6 class="fw-bold mb-1">Quarto Familiar</h6>
-                <small class="text-muted"
-                  ><i class="bi bi-people-fill me-1"></i>4 Adultos •
-                  <i class="bi bi-aspect-ratio-fill mx-1"></i>50 m²</small
-                >
+                <small class="text-muted">
+                  <i class="bi bi-people-fill me-1"></i>4 Adultos •
+                  <i class="bi bi-aspect-ratio-fill mx-1"></i>50 m²
+                </small>
               </div>
-              <div class="text-md-end mt-3 mt-md-0">
-                <span class="fw-bold text-danger">Esgotado</span>
-                <a href="#" class="btn btn-secondary btn-sm disabled mt-1"
+
+              <!-- Indisponibilidade -->
+              <div class="text-md-end">
+                <span class="fw-bold text-danger d-block mb-2">Esgotado</span>
+                <a href="#" class="btn btn-secondary btn-sm disabled"
                   >Indisponível</a
                 >
               </div>
@@ -501,9 +560,7 @@
           </div>
         </aside>
       </div>
-      
     </main>
-    
 
     <!-- FOOTER -->
     <footer class="py-3">

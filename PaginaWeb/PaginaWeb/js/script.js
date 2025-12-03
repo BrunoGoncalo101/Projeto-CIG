@@ -225,6 +225,15 @@ document.addEventListener("DOMContentLoaded", () => {
           currentPassword.classList.add("is-invalid");
           formIsValid = false;
         }
+        if (currentPassword.value.trim() == newPassword.value.trim()) {
+          alert("A nova password não pode ser igual à atual.");
+          newPassword.classList.add("is-invalid");
+          formIsValid = false;
+        }
+        if (confirmPassword.value.trim() === "") {
+          confirmPassword.classList.add("is-invalid");
+          formIsValid = false;
+        }
         if (newPassword.value.trim().length > 0 && newPassword.value.trim().length < 6) {
           newPassword.classList.add("is-invalid");
           formIsValid = false;
@@ -234,11 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
           formIsValid = false;
         }
       }
+        
 
       // Se o formulário for válido, atualiza o perfil
       if (formIsValid) {
         localStorage.setItem("userName", newName);
         alert("Perfil atualizado com sucesso!");
+        
 
         // Atualizar a navbar com o novo nome - muda consuante o nome que escolheres
         if (typeof updateNavbarState === "function") {
@@ -252,6 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         profileForm.classList.remove("was-validated");
       } else {
+        alert("Por favor, corrija os erros no formulário.");
         profileForm.classList.add("was-validated");
       }
     });
@@ -554,5 +566,141 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+  document.addEventListener('DOMContentLoaded', function () {
+  console.log('DOM totalmente carregado, inicializando comentários...');
 
+  // Função para inicializar o sistema de comentários para reservas concluídas
+  function inicializarComentarios() {
+    // Seleciona todos os cards de reservas concluídas que possuem comentários
+    const reservasConcluidas = document.querySelectorAll('.reserva-concluida');
+
+    reservasConcluidas.forEach((reserva) => {
+      const reservaId = reserva.getAttribute('data-reserva-id');
+      console.log('Inicializando reserva concluída ID:', reservaId);
+
+      const btnComentar = reserva.querySelector('.btn-comentar');
+      const comentarioForm = reserva.querySelector('.comentario-form');
+      const comentarioSalvo = reserva.querySelector('.comentario-salvo');
+      const btnEnviarComentario = reserva.querySelector('.btn-enviar-comentario');
+      const comentarioTexto = reserva.querySelector('.comentario-texto');
+      const estrelasInput = reserva.querySelectorAll('.rating-input i');
+      const estrelasSalvas = reserva.querySelector('.rating-stars-salvas');
+      const comentarioSalvoTexto = reserva.querySelector('.comentario-salvo-texto');
+
+      let avaliacaoSelecionada = 0;
+
+      // Checagem básica para garantir que todos os elementos foram encontrados
+      if (!btnComentar || !comentarioForm || !comentarioTexto || !btnEnviarComentario || !estrelasInput.length || !comentarioSalvo || !estrelasSalvas || !comentarioSalvoTexto) {
+        console.error(`Erro: Elementos não encontrados para a reserva ${reservaId}`);
+        return;
+      }
+
+      // Carrega o comentário salvo (se existir) do localStorage
+      const comentarioGuardado = JSON.parse(localStorage.getItem(`comentario-${reservaId}`));
+      if (comentarioGuardado) {
+        console.log(`Comentário encontrado no localStorage para ${reservaId}`, comentarioGuardado);
+
+        // Exibe a avaliação e o comentário salvos
+        exibirComentarioSalvo(comentarioGuardado, estrelasSalvas, comentarioSalvoTexto);
+        comentarioSalvo.classList.remove('d-none');
+        btnComentar.classList.add('d-none'); // Esconde o botão "Avaliar" se já houver uma avaliação
+      }
+
+      // Evento para exibir ou ocultar o formulário de comentário ao clicar no botão "Avaliar"
+      btnComentar.addEventListener('click', () => {
+        console.log(`Botão Avaliar clicado para ${reservaId}`);
+        comentarioForm.classList.toggle('d-none');
+      });
+
+      // Evento de clique nas estrelas para selecionar a avaliação
+      estrelasInput.forEach((estrela) => {
+        estrela.addEventListener('click', () => {
+          avaliacaoSelecionada = parseInt(estrela.getAttribute('data-star'), 10);
+          console.log(`Estrela ${avaliacaoSelecionada} selecionada para ${reservaId}`);
+          atualizarEstrelasVisual(avaliacaoSelecionada, estrelasInput);
+        });
+      });
+
+      // Evento para enviar o comentário
+      btnEnviarComentario.addEventListener('click', () => {
+        const textoComentario = comentarioTexto.value.trim();
+        console.log(`Enviando comentário para ${reservaId}. Avaliação: ${avaliacaoSelecionada}, Comentário: "${textoComentario}"`);
+
+        // Validação básica do comentário e da avaliação
+        if (!textoComentario) {
+          comentarioTexto.classList.add('is-invalid');
+          console.warn('Comentário vazio detectado.');
+        } else {
+          comentarioTexto.classList.remove('is-invalid');
+        }
+
+        if (avaliacaoSelecionada === 0) {
+          alert('Por favor, selecione uma classificação de 1 a 5 estrelas.');
+          return;
+        }
+
+        if (textoComentario && avaliacaoSelecionada > 0) {
+          // Cria o objeto de comentário para armazenar
+          const comentarioData = {
+            avaliacao: avaliacaoSelecionada,
+            comentario: textoComentario,
+            data: new Date().toISOString(), // Data do comentário para referência
+          };
+
+          // Salva no localStorage (chave única por reserva)
+          localStorage.setItem(`comentario-${reservaId}`, JSON.stringify(comentarioData));
+          console.log(`Comentário salvo no localStorage para ${reservaId}.`, comentarioData);
+
+          // Exibe o comentário salvo
+          exibirComentarioSalvo(comentarioData, estrelasSalvas, comentarioSalvoTexto);
+
+          // Oculta o formulário e exibe a seção de comentário salvo
+          comentarioForm.classList.add('d-none');
+          comentarioSalvo.classList.remove('d-none');
+
+          // Esconde o botão "Avaliar" após o envio do comentário
+          btnComentar.classList.add('d-none');
+        }
+      });
+    });
+  }
+
+  // Função para atualizar a exibição visual das estrelas selecionadas
+  function atualizarEstrelasVisual(avaliacao, estrelasInput) {
+    estrelasInput.forEach((estrela) => {
+      const starValue = parseInt(estrela.getAttribute('data-star'), 10);
+      if (starValue <= avaliacao) {
+        estrela.classList.remove('bi-star');
+        estrela.classList.add('bi-star-fill');
+      } else {
+        estrela.classList.remove('bi-star-fill');
+        estrela.classList.add('bi-star');
+      }
+    });
+  }
+
+  // Função para exibir visualmente um comentário salvo (estrelas e texto)
+  function exibirComentarioSalvo(comentarioData, estrelasSalvas, comentarioSalvoTexto) {
+    // Exibe as estrelas salvas preenchidas de acordo com a avaliação
+    estrelasSalvas.innerHTML = ''; // Limpa o conteúdo anterior
+    for (let i = 1; i <= 5; i++) {
+      const starIcon = document.createElement('i');
+      starIcon.classList.add('bi');
+      if (i <= comentarioData.avaliacao) {
+        starIcon.classList.add('bi-star-fill'); // Preenchida
+      } else {
+        starIcon.classList.add('bi-star'); // Vazia
+      }
+      estrelasSalvas.appendChild(starIcon);
+    }
+
+    // Exibe o texto do comentário salvo
+    comentarioSalvoTexto.innerText = comentarioData.comentario;
+  }
+
+  // Inicializa o sistema de comentários ao carregar a página
+  inicializarComentarios();
+});
 }); 
+
+
