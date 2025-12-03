@@ -1,7 +1,7 @@
 /**
  * @file script.js
  * @description Script principal para o site StayIn
- * 
+ *
  * Índice:
  * 1. Lógica Global: Selecionar Tema (Dark Mode)
  * 2. Lógica Global: Autenticação e Estado da Navbar
@@ -13,14 +13,13 @@
  * 7. Lógica da Página de Confirmação
  * 8. Bloqueio de Acesso à Página de Reserva para Não Autenticados
  * 9. Configuração do DateRangePicker (Check-in e Check-out)
+ * 10. Lógica de Avaliações (Estrelas e Comentários)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Assim garantimos que o JS só corre depois do HTML carregar 
+  // Assim garantimos que o JS só corre depois do HTML carregar
 
-  
   // 1. Lógica Global: Selecionar Tema (Dark Mode)
- 
 
   const getPreferredTheme = () => {
     const storedTheme = localStorage.getItem("theme");
@@ -31,7 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const setTheme = (theme) => {
-    if (theme === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (
+      theme === "auto" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
       document.documentElement.setAttribute("data-bs-theme", "dark");
     } else {
       document.documentElement.setAttribute("data-bs-theme", theme);
@@ -65,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 2. Lógica Global: Autenticação e Estado da Navbar
-  
 
   const loggedOutItems = document.querySelectorAll(".nav-logged-out");
   const loggedInItems = document.querySelectorAll(".nav-logged-in");
@@ -103,9 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Chamar a função para deixar a navbar no estado certo
   updateNavbarState();
 
-  
   // 3. Lógica de Login e Registo
-  
 
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
@@ -128,7 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
       event.stopPropagation();
 
       if (registerForm.checkValidity()) {
-        const firstName = document.getElementById("register-firstname").value.trim();
+        const firstName = document
+          .getElementById("register-firstname")
+          .value.trim();
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userName", firstName);
         window.location.href = "index.html";
@@ -138,15 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  
-
   // 4. Lógica da Homepage (Personalização e Conteúdo Dinâmico)
-  
 
   if (document.body.classList.contains("homepage")) {
     // Só corre se estiver na homepage
     const ofertasSection = document.getElementById("ofertas-section");
-    const recomendacoesSection = document.getElementById("recomendacoes-section");
+    const recomendacoesSection = document.getElementById(
+      "recomendacoes-section"
+    );
     const heroTitle = document.getElementById("hero-title");
     const heroSubtitle = document.getElementById("hero-subtitle");
 
@@ -171,9 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  
   // 5. Lógica da Página "Minha Conta"
-  
 
   const profileForm = document.getElementById("profile-form");
   if (profileForm) {
@@ -211,45 +209,74 @@ document.addEventListener("DOMContentLoaded", () => {
       const newPassword = document.getElementById("new-password");
       const confirmPassword = document.getElementById("confirm-password");
 
-      currentPassword.classList.remove("is-invalid");
-      newPassword.classList.remove("is-invalid");
-      confirmPassword.classList.remove("is-invalid");
+      // Verificar se o usuário está tentando alterar a password
+const currentPasswordValue = currentPassword.value.trim();
+const newPasswordValue = newPassword.value.trim();
+const confirmPasswordValue = confirmPassword.value.trim();
 
-      const isPasswordChange =
-        currentPassword.value.trim() !== "" ||
-        newPassword.value.trim() !== "" ||
-        confirmPassword.value.trim() !== "";
+const isPasswordChange = currentPasswordValue !== "" || newPasswordValue !== "" || confirmPasswordValue !== "";
 
-      if (isPasswordChange) {
-        if (currentPassword.value.trim() === "") {
-          currentPassword.classList.add("is-invalid");
-          formIsValid = false;
-        }
-        if (currentPassword.value.trim() == newPassword.value.trim()) {
-          alert("A nova password não pode ser igual à atual.");
-          newPassword.classList.add("is-invalid");
-          formIsValid = false;
-        }
-        if (confirmPassword.value.trim() === "") {
-          confirmPassword.classList.add("is-invalid");
-          formIsValid = false;
-        }
-        if (newPassword.value.trim().length > 0 && newPassword.value.trim().length < 6) {
-          newPassword.classList.add("is-invalid");
-          formIsValid = false;
-        }
-        if (newPassword.value.trim() !== confirmPassword.value.trim()) {
-          confirmPassword.classList.add("is-invalid");
-          formIsValid = false;
-        }
-      }
-        
+if (isPasswordChange) {
+  let passwordFormValid = true;
 
+  // 1. Verificar se a password atual foi preenchida
+  if (currentPasswordValue === "") {
+    currentPassword.classList.add("is-invalid");
+    currentPasswordFeedback.textContent = "Por favor, insira a password atual.";
+    formIsValid = false;
+    passwordFormValid = false;
+  }
+
+  // 2. Verificar se a nova password foi preenchida (se a atual foi inserida)
+  if (currentPasswordValue !== "" && newPasswordValue === "") {
+    newPassword.classList.add("is-invalid");
+    newPasswordFeedback.textContent = "Por favor, insira a nova password.";
+    formIsValid = false;
+    passwordFormValid = false;
+  }
+
+  // 3. Verificar se a nova password é igual à atual (não pode ser igual)
+  if (newPasswordValue !== "" && currentPasswordValue === newPasswordValue) {
+    newPassword.classList.add("is-invalid");
+    newPasswordFeedback.textContent = "A nova password não pode ser igual à atual.";
+    formIsValid = false;
+    passwordFormValid = false;
+  }
+
+  // 4. Verificar se a nova password tem pelo menos 6 caracteres
+  if (newPasswordValue.length > 0 && newPasswordValue.length < 6) {
+    newPassword.classList.add("is-invalid");
+    newPasswordFeedback.textContent = "A nova password deve ter pelo menos 6 caracteres.";
+    formIsValid = false;
+    passwordFormValid = false;
+  }
+
+  // 5. Verificar se o campo de confirmação da password foi preenchido
+  if (newPasswordValue !== "" && confirmPasswordValue === "") {
+    confirmPassword.classList.add("is-invalid");
+    confirmPasswordFeedback.textContent = "Por favor, confirme a nova password.";
+    formIsValid = false;
+    passwordFormValid = false;
+  }
+
+  // 6. Verificar se a confirmação da nova password bate com a nova password
+  if (newPasswordValue !== "" && confirmPasswordValue !== "" && newPasswordValue !== confirmPasswordValue) {
+    confirmPassword.classList.add("is-invalid");
+    confirmPasswordFeedback.textContent = "As passwords não coincidem. Tente novamente.";
+    formIsValid = false;
+    passwordFormValid = false;
+  }
+
+  // Se a password for válida em todos os critérios
+  if (passwordFormValid) {
+    newPassword.classList.remove("is-invalid");
+    confirmPassword.classList.remove("is-invalid");
+  }
+}
       // Se o formulário for válido, atualiza o perfil
       if (formIsValid) {
         localStorage.setItem("userName", newName);
         alert("Perfil atualizado com sucesso!");
-        
 
         // Atualizar a navbar com o novo nome - muda consuante o nome que escolheres
         if (typeof updateNavbarState === "function") {
@@ -263,15 +290,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         profileForm.classList.remove("was-validated");
       } else {
-        alert("Por favor, corrija os erros no formulário.");
         profileForm.classList.add("was-validated");
       }
     });
+    // Remover feedback de erro quando o usuário começar a digitar
+    [currentPassword, newPassword, confirmPassword].forEach((field) => {
+      field.addEventListener("input", () => {
+        field.classList.remove("is-invalid");
+      });
+    });
   }
 
-  
   // 6. Lógica do Stepper e Formulário de Reserva
-   
 
   const bookingForm = document.getElementById("booking-form");
   if (bookingForm) {
@@ -282,11 +312,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentStep = 0;
 
     // --- CAMPOS DE PAGAMENTO ---
-    const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+    const paymentMethodRadios = document.querySelectorAll(
+      'input[name="paymentMethod"]'
+    );
     const creditCardDetails = document.getElementById("credit-card-details");
     const mbwayDetails = document.getElementById("mbway-details");
     const paypalDetails = document.getElementById("paypal-details");
-    const ccFields = creditCardDetails ? creditCardDetails.querySelectorAll("input") : [];
+    const ccFields = creditCardDetails
+      ? creditCardDetails.querySelectorAll("input")
+      : [];
     const cardNumberField = document.getElementById("cardNumber");
     const cardCVCField = document.getElementById("cardCVC");
     const cardExpiryField = document.getElementById("cardExpiry");
@@ -323,7 +357,9 @@ document.addEventListener("DOMContentLoaded", () => {
     cardNumberField.addEventListener("input", () => {
       const cardNumber = cardNumberField.value.replace(/\s+/g, ""); // Remove espaços
       if (cardNumber.length < 16) {
-        cardNumberField.setCustomValidity("O número do cartão deve ter 16 dígitos.");
+        cardNumberField.setCustomValidity(
+          "O número do cartão deve ter 16 dígitos."
+        );
       } else if (!/^\d{16,19}$/.test(cardNumber)) {
         cardNumberField.setCustomValidity("Insira apenas dígitos (0-9).");
       } else {
@@ -364,9 +400,13 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         if (v < minValue) {
-          cardExpiryField.setCustomValidity("A validade não pode ser anterior ao mês atual.");
+          cardExpiryField.setCustomValidity(
+            "A validade não pode ser anterior ao mês atual."
+          );
         } else if (v > maxValue) {
-          cardExpiryField.setCustomValidity("A validade não pode ser superior a 5 anos a partir de agora.");
+          cardExpiryField.setCustomValidity(
+            "A validade não pode ser superior a 5 anos a partir de agora."
+          );
         } else {
           cardExpiryField.setCustomValidity("");
         }
@@ -376,12 +416,10 @@ document.addEventListener("DOMContentLoaded", () => {
       cardExpiryField.addEventListener("change", validateExpiryRange);
     }
 
-    
     const showStep = (stepIndex) => {
       formSteps.forEach((step) => (step.style.display = "none"));
       if (formSteps[stepIndex]) formSteps[stepIndex].style.display = "block";
 
-      
       stepperItems.forEach((step, index) => {
         step.classList.toggle("active", index < stepIndex + 1);
       });
@@ -389,7 +427,6 @@ document.addEventListener("DOMContentLoaded", () => {
       currentStep = stepIndex;
     };
 
-    
     const validateCurrentStep = () => {
       let isValid = true;
       const currentStepFields = formSteps[currentStep].querySelectorAll(
@@ -410,32 +447,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Preenche o resumo final (passo de confirmação)
     const populateConfirmationStep = () => {
-      document.getElementById("confirm-nome").innerText = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`;
-      document.getElementById("confirm-email").innerText = document.getElementById("email").value;
+      document.getElementById("confirm-nome").innerText = `${
+        document.getElementById("firstName").value
+      } ${document.getElementById("lastName").value}`;
+      document.getElementById("confirm-email").innerText =
+        document.getElementById("email").value;
 
-      const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+      const selectedPayment = document.querySelector(
+        'input[name="paymentMethod"]:checked'
+      );
       document.getElementById("confirm-pagamento").innerText = selectedPayment
         ? selectedPayment.value
         : "Não selecionado";
     };
 
-    
     nextButtons.forEach((button) => {
       button.addEventListener("click", () => {
         if (validateCurrentStep()) {
           if (currentStep === 1) {
-            populateConfirmationStep(); 
+            populateConfirmationStep();
           }
           if (currentStep < formSteps.length - 1) {
             showStep(currentStep + 1);
           }
         } else {
-          bookingForm.classList.add("was-validated"); 
+          bookingForm.classList.add("was-validated");
         }
       });
     });
 
-    
     prevButtons.forEach((button) => {
       button.addEventListener("click", () => {
         if (currentStep > 0) {
@@ -444,7 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    
     bookingForm.addEventListener("submit", (event) => {
       event.preventDefault();
       if (!bookingForm.checkValidity()) {
@@ -452,7 +491,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      
       const reservaDetalhes = {
         alojamento: "Hotel Central",
         checkin: document.getElementById("resumo-checkin").innerText,
@@ -462,8 +500,9 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       localStorage.setItem("reservaDetalhes", JSON.stringify(reservaDetalhes));
 
-      
-      const finalButton = document.querySelector('#booking-form button[type="submit"]');
+      const finalButton = document.querySelector(
+        '#booking-form button[type="submit"]'
+      );
       if (finalButton) {
         finalButton.disabled = true;
         finalButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> A Processar...`;
@@ -480,23 +519,19 @@ document.addEventListener("DOMContentLoaded", () => {
       showStep(0);
     }
 
-    
     // 6.1. Interceptar a Tecla Enter no Formulário de Reserva
-    
 
     bookingForm.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault(); // Ao clicar Enter ele avançava o formulário, agora não
 
         if (currentStep === 0) {
-          
           if (validateCurrentStep()) {
             showStep(1);
           } else {
             bookingForm.classList.add("was-validated");
           }
         } else if (currentStep === 1) {
-          
           if (validateCurrentStep()) {
             populateConfirmationStep();
             showStep(2);
@@ -504,14 +539,12 @@ document.addEventListener("DOMContentLoaded", () => {
             bookingForm.classList.add("was-validated");
           }
         }
-        // No Passo 3, Enter não faz nada 
+        // No Passo 3, Enter não faz nada
       }
     });
   }
 
-   
   // 7. Lógica da Página de Confirmação
-  
 
   const confirmationPage = document.querySelector(".confirmation-summary");
   if (confirmationPage) {
@@ -519,20 +552,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (detalhes) {
       // Preenche os dados da reserva na página de confirmação
-      document.getElementById("conf-alojamento").innerText = detalhes.alojamento;
+      document.getElementById("conf-alojamento").innerText =
+        detalhes.alojamento;
       document.getElementById("conf-checkin").innerText = detalhes.checkin;
       document.getElementById("conf-checkout").innerText = detalhes.checkout;
       document.getElementById("conf-hospedes").innerText = detalhes.hospedes;
       document.getElementById("conf-preco").innerText = detalhes.preco;
 
-      
       localStorage.removeItem("reservaDetalhes");
     }
   }
 
-  
   // 8. Bloqueio de Acesso à Página de Reserva para Não Autenticados
-  
+
   // Se nao tens login, nao reservas nada.
   if (window.location.pathname.includes("reserva.html")) {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -542,165 +574,144 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-   
   // 9. Configuração do Daterangepicker (Check-in e Check-out)
-  
 
   $(document).ready(function () {
     $('input[name="daterange"]').daterangepicker({
-      opens: 'center',
+      opens: "center",
       autoApply: true,
-      minDate: moment().startOf('day'), // Bloqueia datas anteriores á data atual, tal como nos sites de reservas atuais
+      minDate: moment().startOf("day"), // Bloqueia datas anteriores á data atual, tal como nos sites de reservas atuais
       locale: {
-        format: 'DD/MM/YYYY',
-        applyLabel: 'Aplicar',
-        cancelLabel: 'Cancelar',
-        fromLabel: 'De',
-        toLabel: 'Até',
-        daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        format: "DD/MM/YYYY",
+        applyLabel: "Aplicar",
+        cancelLabel: "Cancelar",
+        fromLabel: "De",
+        toLabel: "Até",
+        daysOfWeek: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
         monthNames: [
-          'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro",
         ],
-        firstDay: 1 // Começa a semana na segunda-feira
-      }
+        firstDay: 1,
+      },
     });
   });
-  document.addEventListener('DOMContentLoaded', function () {
-  console.log('DOM totalmente carregado, inicializando comentários...');
+});
 
-  // Função para inicializar o sistema de comentários para reservas concluídas
-  function inicializarComentarios() {
-    // Seleciona todos os cards de reservas concluídas que possuem comentários
-    const reservasConcluidas = document.querySelectorAll('.reserva-concluida');
+/* 10. Lógica de Avaliações (Estrelas e Comentários) */
 
-    reservasConcluidas.forEach((reserva) => {
-      const reservaId = reserva.getAttribute('data-reserva-id');
-      console.log('Inicializando reserva concluída ID:', reservaId);
+document.addEventListener("DOMContentLoaded", () => {
+  const avaliarButtons = document.querySelectorAll(".btn-avaliar");
+  avaliarButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const cardBody = button.closest(".card-body");
+      const avaliacaoForm = cardBody.querySelector(".avaliacao-form");
 
-      const btnComentar = reserva.querySelector('.btn-comentar');
-      const comentarioForm = reserva.querySelector('.comentario-form');
-      const comentarioSalvo = reserva.querySelector('.comentario-salvo');
-      const btnEnviarComentario = reserva.querySelector('.btn-enviar-comentario');
-      const comentarioTexto = reserva.querySelector('.comentario-texto');
-      const estrelasInput = reserva.querySelectorAll('.rating-input i');
-      const estrelasSalvas = reserva.querySelector('.rating-stars-salvas');
-      const comentarioSalvoTexto = reserva.querySelector('.comentario-salvo-texto');
+      avaliacaoForm.classList.toggle("d-none");
+    });
+  });
 
-      let avaliacaoSelecionada = 0;
+  const ratingContainers = document.querySelectorAll(".rating-stars");
+  ratingContainers.forEach((container) => {
+    const stars = container.querySelectorAll("i");
 
-      // Checagem básica para garantir que todos os elementos foram encontrados
-      if (!btnComentar || !comentarioForm || !comentarioTexto || !btnEnviarComentario || !estrelasInput.length || !comentarioSalvo || !estrelasSalvas || !comentarioSalvoTexto) {
-        console.error(`Erro: Elementos não encontrados para a reserva ${reservaId}`);
+    const updateStarsVisual = (starValue) => {
+      stars.forEach((star, index) => {
+        if (index < starValue) {
+          star.classList.remove("bi-star");
+          star.classList.add("bi-star-fill");
+        } else {
+          star.classList.remove("bi-star-fill");
+          star.classList.add("bi-star");
+        }
+      });
+    };
+
+    stars.forEach((star) => {
+      star.addEventListener("mouseenter", () => {
+        const starValue = parseInt(star.getAttribute("data-star"), 10);
+        updateStarsVisual(starValue);
+      });
+
+      star.addEventListener("click", () => {
+        const starValue = parseInt(star.getAttribute("data-star"), 10);
+        container.setAttribute("data-selected", starValue);
+        updateStarsVisual(starValue);
+      });
+
+      container.addEventListener("mouseleave", () => {
+        const selectedValue =
+          parseInt(container.getAttribute("data-selected"), 10) || 0;
+        updateStarsVisual(selectedValue);
+      });
+    });
+  });
+
+  const enviarAvaliacaoButtons = document.querySelectorAll(
+    ".btn-enviar-avaliacao"
+  );
+
+  enviarAvaliacaoButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const cardBody = button.closest(".card-body");
+      const avaliacaoForm = cardBody.querySelector(".avaliacao-form");
+      const avaliacaoSalva = cardBody.querySelector(".avaliacao-salva");
+
+      const ratingContainer = avaliacaoForm.querySelector(".rating-stars");
+      const selectedStars = parseInt(
+        ratingContainer.getAttribute("data-selected"),
+        10
+      );
+
+      const comentarioTexto = avaliacaoForm
+        .querySelector(".comentario-texto")
+        .value.trim();
+
+      if (!selectedStars || selectedStars < 1 || selectedStars > 5) {
+        alert("Por favor, selecione uma classificação de 1 a 5 estrelas.");
         return;
       }
 
-      // Carrega o comentário salvo (se existir) do localStorage
-      const comentarioGuardado = JSON.parse(localStorage.getItem(`comentario-${reservaId}`));
-      if (comentarioGuardado) {
-        console.log(`Comentário encontrado no localStorage para ${reservaId}`, comentarioGuardado);
-
-        // Exibe a avaliação e o comentário salvos
-        exibirComentarioSalvo(comentarioGuardado, estrelasSalvas, comentarioSalvoTexto);
-        comentarioSalvo.classList.remove('d-none');
-        btnComentar.classList.add('d-none'); // Esconde o botão "Avaliar" se já houver uma avaliação
+      if (!comentarioTexto) {
+        alert("Por favor, insira um comentário.");
+        return;
       }
 
-      // Evento para exibir ou ocultar o formulário de comentário ao clicar no botão "Avaliar"
-      btnComentar.addEventListener('click', () => {
-        console.log(`Botão Avaliar clicado para ${reservaId}`);
-        comentarioForm.classList.toggle('d-none');
-      });
+      avaliacaoForm.classList.add("d-none");
 
-      // Evento de clique nas estrelas para selecionar a avaliação
-      estrelasInput.forEach((estrela) => {
-        estrela.addEventListener('click', () => {
-          avaliacaoSelecionada = parseInt(estrela.getAttribute('data-star'), 10);
-          console.log(`Estrela ${avaliacaoSelecionada} selecionada para ${reservaId}`);
-          atualizarEstrelasVisual(avaliacaoSelecionada, estrelasInput);
-        });
-      });
+      avaliacaoSalva.classList.remove("d-none");
 
-      // Evento para enviar o comentário
-      btnEnviarComentario.addEventListener('click', () => {
-        const textoComentario = comentarioTexto.value.trim();
-        console.log(`Enviando comentário para ${reservaId}. Avaliação: ${avaliacaoSelecionada}, Comentário: "${textoComentario}"`);
+      const comentarioSalvoTexto = avaliacaoSalva.querySelector(
+        ".avaliacao-salva-texto"
+      );
+      comentarioSalvoTexto.textContent = comentarioTexto;
 
-        // Validação básica do comentário e da avaliação
-        if (!textoComentario) {
-          comentarioTexto.classList.add('is-invalid');
-          console.warn('Comentário vazio detectado.');
+      const estrelasSalvasContainer = avaliacaoSalva.querySelector(
+        ".rating-stars-salvas"
+      );
+      estrelasSalvasContainer.innerHTML = "";
+
+      for (let i = 1; i <= 5; i++) {
+        const estrela = document.createElement("i");
+        if (i <= selectedStars) {
+          estrela.classList.add("bi", "bi-star-fill", "text-warning");
         } else {
-          comentarioTexto.classList.remove('is-invalid');
+          estrela.classList.add("bi", "bi-star", "text-secondary");
         }
-
-        if (avaliacaoSelecionada === 0) {
-          alert('Por favor, selecione uma classificação de 1 a 5 estrelas.');
-          return;
-        }
-
-        if (textoComentario && avaliacaoSelecionada > 0) {
-          // Cria o objeto de comentário para armazenar
-          const comentarioData = {
-            avaliacao: avaliacaoSelecionada,
-            comentario: textoComentario,
-            data: new Date().toISOString(), // Data do comentário para referência
-          };
-
-          // Salva no localStorage (chave única por reserva)
-          localStorage.setItem(`comentario-${reservaId}`, JSON.stringify(comentarioData));
-          console.log(`Comentário salvo no localStorage para ${reservaId}.`, comentarioData);
-
-          // Exibe o comentário salvo
-          exibirComentarioSalvo(comentarioData, estrelasSalvas, comentarioSalvoTexto);
-
-          // Oculta o formulário e exibe a seção de comentário salvo
-          comentarioForm.classList.add('d-none');
-          comentarioSalvo.classList.remove('d-none');
-
-          // Esconde o botão "Avaliar" após o envio do comentário
-          btnComentar.classList.add('d-none');
-        }
-      });
-    });
-  }
-
-  // Função para atualizar a exibição visual das estrelas selecionadas
-  function atualizarEstrelasVisual(avaliacao, estrelasInput) {
-    estrelasInput.forEach((estrela) => {
-      const starValue = parseInt(estrela.getAttribute('data-star'), 10);
-      if (starValue <= avaliacao) {
-        estrela.classList.remove('bi-star');
-        estrela.classList.add('bi-star-fill');
-      } else {
-        estrela.classList.remove('bi-star-fill');
-        estrela.classList.add('bi-star');
+        estrelasSalvasContainer.appendChild(estrela);
       }
+
+      alert("Avaliação enviada com sucesso!");
     });
-  }
-
-  // Função para exibir visualmente um comentário salvo (estrelas e texto)
-  function exibirComentarioSalvo(comentarioData, estrelasSalvas, comentarioSalvoTexto) {
-    // Exibe as estrelas salvas preenchidas de acordo com a avaliação
-    estrelasSalvas.innerHTML = ''; // Limpa o conteúdo anterior
-    for (let i = 1; i <= 5; i++) {
-      const starIcon = document.createElement('i');
-      starIcon.classList.add('bi');
-      if (i <= comentarioData.avaliacao) {
-        starIcon.classList.add('bi-star-fill'); // Preenchida
-      } else {
-        starIcon.classList.add('bi-star'); // Vazia
-      }
-      estrelasSalvas.appendChild(starIcon);
-    }
-
-    // Exibe o texto do comentário salvo
-    comentarioSalvoTexto.innerText = comentarioData.comentario;
-  }
-
-  // Inicializa o sistema de comentários ao carregar a página
-  inicializarComentarios();
+  });
 });
-}); 
-
-

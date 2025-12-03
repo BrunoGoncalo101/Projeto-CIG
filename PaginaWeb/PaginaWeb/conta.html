@@ -31,9 +31,9 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-xl navbar-dark navbar-scrolled">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-          Stay<span class="logoColor">In</span>
-        </a>
+        <a class="navbar-brand fw-bold" href="index.html"
+          >Stay<span class="logoColor">In</span></a
+        >
         <button
           class="navbar-toggler custom-toggler"
           type="button"
@@ -78,7 +78,6 @@
                 </li>
               </ul>
             </li>
-
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -124,7 +123,6 @@
                 </li>
               </ul>
             </li>
-
             <!-- Com login -->
             <li class="nav-item dropdown nav-logged-in d-none">
               <a
@@ -171,6 +169,7 @@
       </div>
     </div>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="container my-5">
       <div class="row">
         <!-- Coluna da Esquerda: Navegação dos Separadores -->
@@ -266,15 +265,71 @@
                         08/03/2024
                       </p>
                       <span class="badge bg-secondary">Concluído</span>
-                      <a href="#" class="btn btn-primary float-end"
-                        >Reservar Novamente</a
+
+                      <!-- Botão Avaliar -->
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary float-end me-2 btn-avaliar"
                       >
+                        Avaliar
+                      </button>
+
+                      <!-- Formulário de Avaliação escondido no inicio -->
+                      <div class="avaliacao-form mt-4 d-none">
+                        <h6 class="mb-3">Deixe a sua avaliação:</h6>
+
+                        <!-- Avaliação de Estrelas -->
+                        <div class="mb-3">
+                          <label class="form-label d-block"
+                            >Classificação:</label
+                          >
+                          <div class="rating-stars" data-selected="0">
+                            <i class="bi bi-star" data-star="1"></i>
+                            <i class="bi bi-star" data-star="2"></i>
+                            <i class="bi bi-star" data-star="3"></i>
+                            <i class="bi bi-star" data-star="4"></i>
+                            <i class="bi bi-star" data-star="5"></i>
+                          </div>
+                        </div>
+
+                        <!-- Campo de Texto do Comentário -->
+                        <div class="mb-3">
+                          <label class="form-label">Comentário:</label>
+                          <textarea
+                            class="form-control comentario-texto"
+                            rows="3"
+                            placeholder="Compartilhe a sua experiência..."
+                            required
+                          ></textarea>
+                          <div class="invalid-feedback">
+                            Por favor, insira um comentário.
+                          </div>
+                        </div>
+
+                        <!-- Botão Enviar Avaliação -->
+                        <button
+                          type="button"
+                          class="btn btn-success btn-enviar-avaliacao"
+                        >
+                          Enviar Avaliação
+                        </button>
+                      </div>
+
+                      <div class="avaliacao-salva mt-4 d-none">
+                        <div class="d-flex align-items-center mb-2">
+                          <div class="rating-stars-salvas me-2"></div>
+                          <span class="badge bg-success">Avaliação</span>
+                        </div>
+
+                        <blockquote class="blockquote">
+                          <p class="mb-1 avaliacao-salva-texto text-muted"></p>
+                        </blockquote>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
             <!-- PAINEL DE CONTEÚDO 2: MEU PERFIL -->
             <div
               class="tab-pane fade"
@@ -329,64 +384,43 @@
                   </div>
                 </div>
                 <!-- Card: Alterar Password -->
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Alterar Password</h5>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Alterar Password</h5>
 
-                    <!-- Campo Password Atual -->
-                    <div class="mb-3">
-                      <label for="current-password" class="form-label"
-                        >Password Atual</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="current-password"
-                      />
-                      <div class="invalid-feedback">
-                        Por favor, insira a password atual.
-                      </div>
-                    </div>
+    <!-- Campo Password Atual -->
+    <div class="mb-3">
+      <label for="current-password" class="form-label">Password Atual</label>
+      <input type="password" class="form-control" id="current-password" />
+      <div class="invalid-feedback" id="current-password-feedback">
+        Por favor, insira a password atual.
+      </div>
+    </div>
 
-                    <!-- Campo Nova Password -->
-                    <div class="mb-3">
-                      <label for="new-password" class="form-label"
-                        >Nova Password</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="new-password"
-                      />
-                      <div class="invalid-feedback">
-                        A nova password deve ter pelo menos 6 caracteres.
-                      </div>
-                    </div>
+    <!-- Campo Nova Password -->
+    <div class="mb-3">
+      <label for="new-password" class="form-label">Nova Password</label>
+      <input type="password" class="form-control" id="new-password" />
+      <div class="invalid-feedback" id="new-password-feedback">
+        
+      </div>
+    </div>
 
-                    <!-- Campo Confirmar Nova Password -->
-                    <div class="mb-3">
-                      <label for="confirm-password" class="form-label"
-                        >Confirmar Nova Password</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="confirm-password"
-                      />
-                      <div class="invalid-feedback">
-                        As passwords não coincidem. Tente novamente.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <!-- Campo Confirmar Nova Password -->
+    <div class="mb-3">
+      <label for="confirm-password" class="form-label">Confirmar Nova Password</label>
+      <input type="password" class="form-control" id="confirm-password" />
+      <div class="invalid-feedback" id="confirm-password-feedback">
+        
+      </div>
+    </div>
+  </div>
+</div>
 
-                <div class="mt-4 text-end">
-                  <button type="submit" class="btn btn-primary">
-                    Guardar Alterações
-                  </button>
-                </div>
-              </form>
-            </div>
+<div class="mt-4 text-end">
+  <button type="submit" class="btn btn-primary">Guardar Alterações</button>
+</div>
+            <!-- FIM DO PAINEL MEU PERFIL -->
           </div>
         </div>
       </div>
