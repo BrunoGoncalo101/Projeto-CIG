@@ -191,8 +191,7 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="container my-5">
       <!-- Botão para abrir os filtros em ecrãs pequenos -->
-      <!-- A classe 'd-lg-none' faz com que este botão só apareça em ecrãs pequenos -->
-      <div class="d-lg-none mb-3">
+      <div class="d-lg-none mb-3"> <!-- Apenas visível em mobile -->
         <button
           class="btn btn-primary w-100"
           type="button"
@@ -203,7 +202,7 @@
         </button>
       </div>
 
-      <!-- Grelha principal: divide a página em Filtros (esquerda) e Resultados (direita) -->
+      <!-- Grelha principal -->
       <div class="row">
         <!-- COLUNA DOS FILTROS -->
 
@@ -211,7 +210,7 @@
           <div class="filters-sidebar p-3 rounded shadow-sm">
             <h5 class="fw-bold mb-3">Filtros</h5>
 
-            <!-- O componente Acordeão do Bootstrap para organizar os grupos de filtros -->
+            
             <div class="accordion" id="filtersAccordion">
               <!-- Filtro: Tipo de Alojamento -->
               <div class="accordion-item">
@@ -549,7 +548,7 @@
             </div>
           </div>
 
-          <!-- Paginação para navegar entre páginas -->
+          <!-- Paginação -->
           <nav class="mt-4">
             <ul class="pagination justify-content-center">
               <li class="page-item disabled">

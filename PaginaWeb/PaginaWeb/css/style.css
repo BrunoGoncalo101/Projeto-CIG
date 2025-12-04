@@ -176,7 +176,7 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Adicionar padding no topo para compensar a navbar fixa em todas as páginas */
+/* Adicionar padding no topo senao em mobile nao se vê a navbar fixa */
 body {
   padding-top: 56px; 
 }
@@ -774,7 +774,7 @@ footer {
   display: none !important;
 }
 
-/* Botão "Ver detalhes" com caixa azul */
+
 .offer-card .btn {
   border: 1px solid #0d6efd !important;
   border-radius: 6px !important;
@@ -787,7 +787,7 @@ footer {
   color: white !important;
 }
 
-/* 2. Regras para computador (Ecrã Grande) */
+/* Regras para computador */
 @media (min-width: 992px) {
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
@@ -806,7 +806,7 @@ footer {
   }
 }
 
-/* 3. Regras para tablet e telemóvel (Ecrã pequeno) */
+/* Regras para tablet e telemóvel */
 @media (max-width: 991.98px) {
   .carousel-control-prev,
   .carousel-control-next {

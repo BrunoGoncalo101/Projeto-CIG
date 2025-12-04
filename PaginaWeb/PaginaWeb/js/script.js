@@ -12,7 +12,7 @@
  *    6.1. Interceptar Tecla Enter no Formulário de Reserva
  * 7. Lógica da Página de Confirmação
  * 8. Bloqueio de Acesso à Página de Reserva para Não Autenticados
- * 9. Configuração do DateRangePicker (Check-in e Check-out)
+ * 9. Check-in e Check-out DateRangePicker
  * 10. Lógica de Avaliações (Estrelas e Comentários)
  */
 
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loggedOutItems.forEach((item) => item.classList.add("d-none"));
       loggedInItems.forEach((item) => item.classList.remove("d-none"));
 
-      // Atualizar o nome na navbar - muda consuante o nome que escolheres
+      // Atualizar o nome na navbar
       if (navbarUsername) {
         const userName = localStorage.getItem("userName") || "Utilizador";
         navbarUsername.innerText = userName;
@@ -204,81 +204,141 @@ document.addEventListener("DOMContentLoaded", () => {
         lastNameInput.classList.remove("is-invalid");
       }
 
-      // Validação de passwords (se estiver preenchida)
+      // Validação de passwords 
       const currentPassword = document.getElementById("current-password");
       const newPassword = document.getElementById("new-password");
       const confirmPassword = document.getElementById("confirm-password");
 
+      // Selecionar elementos de feedback das passwords
+      const currentPasswordFeedback = document.getElementById(
+        "current-password-feedback"
+      );
+      const newPasswordFeedback = document.getElementById(
+        "new-password-feedback"
+      );
+      const confirmPasswordFeedback = document.getElementById(
+        "confirm-password-feedback"
+      );
+
+      // Limpar mensagens de feedback anteriores
+      currentPasswordFeedback.textContent = "";
+      newPasswordFeedback.textContent = "";
+      confirmPasswordFeedback.textContent = "";
+
+      // Remover classes inválidas anteriores
+      currentPassword.classList.remove("is-invalid");
+      newPassword.classList.remove("is-invalid");
+      confirmPassword.classList.remove("is-invalid");
+
       // Verificar se o usuário está tentando alterar a password
-const currentPasswordValue = currentPassword.value.trim();
-const newPasswordValue = newPassword.value.trim();
-const confirmPasswordValue = confirmPassword.value.trim();
+      const currentPasswordValue = currentPassword.value.trim();
+      const newPasswordValue = newPassword.value.trim();
+      const confirmPasswordValue = confirmPassword.value.trim();
 
-const isPasswordChange = currentPasswordValue !== "" || newPasswordValue !== "" || confirmPasswordValue !== "";
+      const isPasswordChange =
+        currentPasswordValue !== "" ||
+        newPasswordValue !== "" ||
+        confirmPasswordValue !== "";
 
-if (isPasswordChange) {
-  let passwordFormValid = true;
+      if (isPasswordChange) {
+        let passwordFormValid = true;
 
-  // 1. Verificar se a password atual foi preenchida
-  if (currentPasswordValue === "") {
-    currentPassword.classList.add("is-invalid");
-    currentPasswordFeedback.textContent = "Por favor, insira a password atual.";
-    formIsValid = false;
-    passwordFormValid = false;
-  }
+        // 1. Verificar se a password atual foi preenchida
+        if (currentPasswordValue === "") {
+          currentPassword.classList.add("is-invalid");
+          currentPasswordFeedback.textContent =
+            "Por favor, insira a password atual.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
 
-  // 2. Verificar se a nova password foi preenchida (se a atual foi inserida)
-  if (currentPasswordValue !== "" && newPasswordValue === "") {
-    newPassword.classList.add("is-invalid");
-    newPasswordFeedback.textContent = "Por favor, insira a nova password.";
-    formIsValid = false;
-    passwordFormValid = false;
-  }
+        // 2. Verificar se a nova password foi preenchida (se a atual foi inserida)
+        if (currentPasswordValue !== "" && newPasswordValue === "") {
+          newPassword.classList.add("is-invalid");
+          newPasswordFeedback.textContent =
+            "Por favor, insira a nova password.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
 
-  // 3. Verificar se a nova password é igual à atual (não pode ser igual)
-  if (newPasswordValue !== "" && currentPasswordValue === newPasswordValue) {
-    newPassword.classList.add("is-invalid");
-    newPasswordFeedback.textContent = "A nova password não pode ser igual à atual.";
-    formIsValid = false;
-    passwordFormValid = false;
-  }
+        // 3. Verificar se a nova password é igual à atual (não pode ser igual)
+        if (
+          newPasswordValue !== "" &&
+          currentPasswordValue === newPasswordValue
+        ) {
+          newPassword.classList.add("is-invalid");
+          newPasswordFeedback.textContent =
+            "A nova password não pode ser igual à atual.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
 
-  // 4. Verificar se a nova password tem pelo menos 6 caracteres
-  if (newPasswordValue.length > 0 && newPasswordValue.length < 6) {
-    newPassword.classList.add("is-invalid");
-    newPasswordFeedback.textContent = "A nova password deve ter pelo menos 6 caracteres.";
-    formIsValid = false;
-    passwordFormValid = false;
-  }
+        // 4. Verificar se a nova password tem pelo menos 6 caracteres
+        if (newPasswordValue.length > 0 && newPasswordValue.length < 6) {
+          newPassword.classList.add("is-invalid");
+          newPasswordFeedback.textContent =
+            "A nova password deve ter pelo menos 6 caracteres.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
 
-  // 5. Verificar se o campo de confirmação da password foi preenchido
-  if (newPasswordValue !== "" && confirmPasswordValue === "") {
-    confirmPassword.classList.add("is-invalid");
-    confirmPasswordFeedback.textContent = "Por favor, confirme a nova password.";
-    formIsValid = false;
-    passwordFormValid = false;
-  }
+        // 5. Verificar se o campo de confirmação da password foi preenchido
+        if (newPasswordValue !== "" && confirmPasswordValue === "") {
+          confirmPassword.classList.add("is-invalid");
+          confirmPasswordFeedback.textContent =
+            "Por favor, confirme a nova password.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
 
-  // 6. Verificar se a confirmação da nova password bate com a nova password
-  if (newPasswordValue !== "" && confirmPasswordValue !== "" && newPasswordValue !== confirmPasswordValue) {
-    confirmPassword.classList.add("is-invalid");
-    confirmPasswordFeedback.textContent = "As passwords não coincidem. Tente novamente.";
-    formIsValid = false;
-    passwordFormValid = false;
-  }
+        // 6. Verificar se a confirmação da nova password bate com a nova password
+        if (
+          newPasswordValue !== "" &&
+          confirmPasswordValue !== "" &&
+          newPasswordValue !== confirmPasswordValue
+        ) {
+          confirmPassword.classList.add("is-invalid");
+          confirmPasswordFeedback.textContent =
+            "As passwords não coincidem. Tente novamente.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
 
-  // Se a password for válida em todos os critérios
-  if (passwordFormValid) {
-    newPassword.classList.remove("is-invalid");
-    confirmPassword.classList.remove("is-invalid");
-  }
-}
+        // 7. Verificar se o campo de confirmação da password foi preenchido
+        if (
+          currentPassword.value.trim() !== "" &&
+          confirmPassword.value.trim() === ""
+        ) {
+          confirmPassword.classList.add("is-invalid");
+          confirmPasswordFeedback.textContent =
+            "Por favor, confirme a nova password.";
+          formIsValid = false;
+          passwordFormValid = false;
+        }
+
+        //
+        if (
+          newPassword.value.trim() !== "" &&
+          confirmPassword.value.trim() === ""
+        ) {
+          confirmPassword.classList.add("is-invalid");
+          formIsValid = false;
+          passwordFormValid = false;
+        }
+        // Se a password for válida em todos os critérios
+        if (passwordFormValid) {
+          newPassword.classList.remove("is-invalid");
+          confirmPassword.classList.remove("is-invalid");
+        }
+      }
+
       // Se o formulário for válido, atualiza o perfil
       if (formIsValid) {
         localStorage.setItem("userName", newName);
-        alert("Perfil atualizado com sucesso!");
 
-        // Atualizar a navbar com o novo nome - muda consuante o nome que escolheres
+        
+
+        // Atualizar a navbar com o novo nome
         if (typeof updateNavbarState === "function") {
           updateNavbarState();
         }
@@ -290,13 +350,22 @@ if (isPasswordChange) {
 
         profileForm.classList.remove("was-validated");
       } else {
+        
         profileForm.classList.add("was-validated");
       }
     });
+
     // Remover feedback de erro quando o usuário começar a digitar
     [currentPassword, newPassword, confirmPassword].forEach((field) => {
       field.addEventListener("input", () => {
         field.classList.remove("is-invalid");
+
+        // Remover a mensagem de erro associada ao campo
+        const feedbackId = field.id + "-feedback"; 
+        const feedbackDiv = document.getElementById(feedbackId);
+        if (feedbackDiv) {
+          feedbackDiv.textContent = ""; 
+        }
       });
     });
   }
@@ -355,7 +424,7 @@ if (isPasswordChange) {
 
     // Validação do Número do Cartão
     cardNumberField.addEventListener("input", () => {
-      const cardNumber = cardNumberField.value.replace(/\s+/g, ""); // Remove espaços
+      const cardNumber = cardNumberField.value.replace(/\s+/g, ""); 
       if (cardNumber.length < 16) {
         cardNumberField.setCustomValidity(
           "O número do cartão deve ter 16 dígitos."
@@ -363,7 +432,7 @@ if (isPasswordChange) {
       } else if (!/^\d{16,19}$/.test(cardNumber)) {
         cardNumberField.setCustomValidity("Insira apenas dígitos (0-9).");
       } else {
-        cardNumberField.setCustomValidity(""); // Válido
+        cardNumberField.setCustomValidity(""); 
       }
     });
 
@@ -375,16 +444,16 @@ if (isPasswordChange) {
       } else if (!/^\d{3}$/.test(cvc)) {
         cardCVCField.setCustomValidity("O CVC deve conter apenas números.");
       } else {
-        cardCVCField.setCustomValidity(""); // Válido
+        cardCVCField.setCustomValidity(""); 
       }
     });
 
-    // Validação da Data de Validade (mínimo: mês atual, máximo: +5 anos)
+    // Validação da Data de Validade do Cartão
     if (cardExpiryField) {
       const now = new Date();
       const minYear = now.getFullYear();
       const minMonth = String(now.getMonth() + 1).padStart(2, "0");
-      const minValue = `${minYear}-${minMonth}`; // Ex.: 2025-12
+      const minValue = `${minYear}-${minMonth}`; 
 
       const maxYear = now.getFullYear() + 5;
       const maxMonth = minMonth;
@@ -394,7 +463,7 @@ if (isPasswordChange) {
       cardExpiryField.max = maxValue;
 
       const validateExpiryRange = () => {
-        const v = cardExpiryField.value; // 'YYYY-MM'
+        const v = cardExpiryField.value; 
         if (!v) {
           cardExpiryField.setCustomValidity("");
           return;
@@ -445,7 +514,7 @@ if (isPasswordChange) {
       return isValid;
     };
 
-    // Preenche o resumo final (passo de confirmação)
+    // Preenche o resumo final 
     const populateConfirmationStep = () => {
       document.getElementById("confirm-nome").innerText = `${
         document.getElementById("firstName").value
@@ -574,13 +643,14 @@ if (isPasswordChange) {
     }
   }
 
-  // 9. Configuração do Daterangepicker (Check-in e Check-out)
+  // 9. Check-in e Check-out DateRangePicker
 
   $(document).ready(function () {
     $('input[name="daterange"]').daterangepicker({
       opens: "center",
       autoApply: true,
-      minDate: moment().startOf("day"), // Bloqueia datas anteriores á data atual, tal como nos sites de reservas atuais
+      minDate: moment().startOf("day"), // Bloqueia datas anteriores á atual
+      maxDate: moment().add(1, "year"), // Limita a 1 ano no futuro
       locale: {
         format: "DD/MM/YYYY",
         applyLabel: "Aplicar",
@@ -608,23 +678,31 @@ if (isPasswordChange) {
   });
 });
 
-/* 10. Lógica de Avaliações (Estrelas e Comentários) */
-
 document.addEventListener("DOMContentLoaded", () => {
-  const avaliarButtons = document.querySelectorAll(".btn-avaliar");
-  avaliarButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const cardBody = button.closest(".card-body");
-      const avaliacaoForm = cardBody.querySelector(".avaliacao-form");
+  // Identificar todos os cards de avaliação
+  const cardsAvaliacao = document.querySelectorAll(".card-avaliacao");
 
+  cardsAvaliacao.forEach((card) => {
+    const avaliarButton = card.querySelector(".btn-avaliar");
+    const avaliacaoForm = card.querySelector(".avaliacao-form");
+    const avaliacaoSalva = card.querySelector(".avaliacao-salva");
+    const enviarAvaliacaoButton = card.querySelector(".btn-enviar-avaliacao");
+    const ratingContainer = card.querySelector(".rating-stars");
+    const stars = ratingContainer.querySelectorAll("i");
+    const comentarioTextoArea = card.querySelector(".comentario-texto");
+    const estrelasSalvasContainer = avaliacaoSalva.querySelector(
+      ".rating-stars-salvas"
+    );
+    const comentarioSalvoTexto = avaliacaoSalva.querySelector(
+      ".avaliacao-salva-texto"
+    );
+
+    
+    avaliarButton.addEventListener("click", () => {
       avaliacaoForm.classList.toggle("d-none");
     });
-  });
 
-  const ratingContainers = document.querySelectorAll(".rating-stars");
-  ratingContainers.forEach((container) => {
-    const stars = container.querySelectorAll("i");
-
+    // Função para atualizar visual das estrelas
     const updateStarsVisual = (starValue) => {
       stars.forEach((star, index) => {
         if (index < starValue) {
@@ -637,6 +715,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
+    // Lógica para interação com as estrelas (hover e clique)
     stars.forEach((star) => {
       star.addEventListener("mouseenter", () => {
         const starValue = parseInt(star.getAttribute("data-star"), 10);
@@ -645,37 +724,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       star.addEventListener("click", () => {
         const starValue = parseInt(star.getAttribute("data-star"), 10);
-        container.setAttribute("data-selected", starValue);
+        ratingContainer.setAttribute("data-selected", starValue);
         updateStarsVisual(starValue);
       });
 
-      container.addEventListener("mouseleave", () => {
+      // Reset visual das estrelas ao sair do container, mantendo a seleção feita
+      ratingContainer.addEventListener("mouseleave", () => {
         const selectedValue =
-          parseInt(container.getAttribute("data-selected"), 10) || 0;
+          parseInt(ratingContainer.getAttribute("data-selected"), 10) || 0;
         updateStarsVisual(selectedValue);
       });
     });
-  });
 
-  const enviarAvaliacaoButtons = document.querySelectorAll(
-    ".btn-enviar-avaliacao"
-  );
-
-  enviarAvaliacaoButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const cardBody = button.closest(".card-body");
-      const avaliacaoForm = cardBody.querySelector(".avaliacao-form");
-      const avaliacaoSalva = cardBody.querySelector(".avaliacao-salva");
-
-      const ratingContainer = avaliacaoForm.querySelector(".rating-stars");
+    // Lógica para enviar avaliação
+    enviarAvaliacaoButton.addEventListener("click", () => {
       const selectedStars = parseInt(
         ratingContainer.getAttribute("data-selected"),
         10
       );
 
-      const comentarioTexto = avaliacaoForm
-        .querySelector(".comentario-texto")
-        .value.trim();
+      const comentarioTexto = comentarioTextoArea.value.trim();
 
       if (!selectedStars || selectedStars < 1 || selectedStars > 5) {
         alert("Por favor, selecione uma classificação de 1 a 5 estrelas.");
@@ -687,20 +755,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      
       avaliacaoForm.classList.add("d-none");
 
+      
       avaliacaoSalva.classList.remove("d-none");
 
-      const comentarioSalvoTexto = avaliacaoSalva.querySelector(
-        ".avaliacao-salva-texto"
-      );
+      
       comentarioSalvoTexto.textContent = comentarioTexto;
 
-      const estrelasSalvasContainer = avaliacaoSalva.querySelector(
-        ".rating-stars-salvas"
-      );
+      
       estrelasSalvasContainer.innerHTML = "";
 
+      // Criar as estrelas salvas com base na avaliação
       for (let i = 1; i <= 5; i++) {
         const estrela = document.createElement("i");
         if (i <= selectedStars) {
@@ -711,6 +778,7 @@ document.addEventListener("DOMContentLoaded", () => {
         estrelasSalvasContainer.appendChild(estrela);
       }
 
+      
       alert("Avaliação enviada com sucesso!");
     });
   });
